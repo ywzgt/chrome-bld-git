@@ -1,0 +1,247 @@
+schedule:
+  - cron
+
+触发时间设为 8点多可能延迟 一个多小时才启动; 尽量避免
+星期和具体日期(月日)同时存在，会视为两个触发器分别(在设置的时分)触发
+
+
+
+................................................................................
+
+windows 编译目标 mini_installer 报错：
+
+子命令:
+python3 ../../chrome/tools/build/win/makecab.py /D CompressionType=LZX /V1 /L . ./setup.exe
+Traceback (most recent call last):
+  File " ... /src/out/win64/../../chrome/tools/build/win/makecab.py", line 214, in <module>
+    main()
+  File " ... /src/out/win64/../../chrome/tools/build/win/makecab.py", line 209, in main
+    WriteCab(output_file, input_file, cab_stored_filename, input_size,
+  File " ... /src/out/win64/../../chrome/tools/build/win/makecab.py", line 148, in WriteCab
+    output_file.write(struct.pack(CFFILE, input_size, 0, 0, date, time, 0))
+struct.error: ushort format requires 0 <= number <= (0x7fff * 2 + 1)
+
+
+原因:
+setup.exe 的时间戳为 1970.1.1
+
+
+
+................................................................................
+
+5.13 之后 libstdc++6 报错 (版本冲突)
+
+The following packages have unmet dependencies:
+...
+ libstdc++6:i386 : Depends: libgcc-s1:i386 (>= 7) but it is not going to be installed
+                   Breaks: libstdc++6 (!= 12.1.0-2ubuntu1~22.04) but 13.1.0-2ubuntu2~22.04 is to be installed
+You will have to install the above packages yourself.
+
+
+$  apt download libstdc++6
+
+Get:1 https://ppa.launchpadcontent.net/ubuntu-toolchain-r/test/ubuntu jammy/main amd64 libstdc++6 amd64 13.1.0-2ubuntu2~22.04 [792 kB]
+Fetched 792 kB in 1s (609 kB/s)
+
+
+-rw-r--r-- 1 root root  371 May 17 10:13 /etc/apt/sources.list
+
+/etc/apt/sources.list.d:
+total 16
+drwxr-xr-x 2 root root 4096 May  7 22:06 .
+drwxr-xr-x 8 root root 4096 May  7 21:53 ..
+-rw-r--r-- 1 root root   89 May  7 21:40 microsoft-prod.list
+-rw-r--r-- 1 root root  166 May  7 21:40 ubuntu-toolchain-r-ubuntu-test-jammy.list
+
+
+
+................................................................................
+
+5.9 git clone 总是报错：
+
+Cloning into 'src'...
+error: RPC failed; HTTP 502 curl 22 The requested URL returned error: 502
+fatal: expected flush after ref listing
+
+git config --global http.postBuffer 157286400
+// 效果不明显
+
+git config --global http.postBuffer 2147483648
+git config --global advice.detachedHead false
+
+
+事件：
+https://www.githubstatus.com/incidents/wj1qbq7r9tcl
+We are seeing slower than usual times to run git clone over HTTPS. SSH is not impacted.
+This incident has been resolved.   May 10, 2023 - 00:06 UTC
+更多事件：
+https://www.githubstatus.com/history
+
+
+
+................................................................................
+
+113.0.5672.116 编译目标 "monochrome_public_apk" 报错
+
+<include compress="brotli" file="../third_party/subresource-filter-ruleset/data/UnindexedRules" name="IDR_SUBRESOURCE_FILTER_UNINDEXED_RULESET" type="BINDATA" />: [Errno 2] No such file or directory: '../../third_party/subresource-filter-ruleset/data/UnindexedRules'
+
+...
+
+FileNotFoundError: [Errno 2] No such file or directory: '../../third_party/subresource-filter-ruleset/data/UnindexedRules'
+
+增加 Hook:
+download_from_google_storage.py --no_resume --no_auth --bucket chromium-ads-detection -s src/third_party/subresource-filter-ruleset/data/UnindexedRules.sha1
+
+
+
+................................................................................
+
+当前主线版本(115) vr 似乎被其他args关联了，所以禁用会报错
+enable_vr = false
+
+  -> Gen args.gn ...
+ERROR at //device/vr/android/BUILD.gn:7:1: Assertion failed.
+assert(enable_vr)
+^-----
+See //device/vr/android/arcore/BUILD.gn:54:5: which caused the file to be included.
+    "//device/vr/android:vr_android",
+    ^-------------------------------
+
+
+并且要增加一个 hook：
+download_from_google_storage.py --no_resume --no_auth  --bucket chromium-gvr-static-shim -d src/third_party/gvr-android-sdk
+
+# https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/gvr-android-sdk
+# https://chromium.googlesource.com/chromium/tools/depot_tools/+/HEAD/download_from_google_storage.py
+
+
+
+................................................................................
+
+上传至 transfer.sh 很慢，上传网速有时会掉至 500k 左右; 不如 push 到 github
+
+_upload_transfer() {
+    #for f in $(find . -name $ver.src.part.tar.xz.'[0-9]*'); do
+        #curl -H "Max-Downloads: 2" -H "Max-Days: 3" --upload-file $f https://transfer.sh >>url
+        #rm $f
+    #done
+    curl -H "Max-Downloads: 2" -H "Max-Days: 3" --upload-file "$1" https://transfer.sh >>url
+}
+
+
+
+................................................................................
+
+git 版本需要保持 src 目录/文件 的时间戳，不然会 Regenerating
+script/rsync 中有运行 find src -exec touch -cd @0 {} +
+
+
+Run bash -e script/build
+ninja: Entering directory `src/out/linux64'
+[0/1] Regenerating ninja files
+[1/54376] ACTION //base:anchor_functions_buildflags(//build/toolchain/linux:clang_x64)
+[2/54376] STAMP obj/base/anchor_functions_buildflags.stamp
+[3/54376] ACTION //base:cfi_buildflags(//build/toolchain/linux:clang_x64)
+...
+
+
+
+................................................................................
+
+gn 配置 Android args 的时候可能会报错，即便是 OmahaProxy/ChromiumDash 上面的 stable;
+
+113.0.5672.76/113/114  报错   换成 linux64 配置就正常
+115.0.* 报错
+112.0.5615.180/194  正常
+
+其实就是因为一个 args：
+
+webview_includes_weblayer = false
+
+
+  -> Gen args.gn ...
+ERROR at //android_webview/system_webview_bundle.gni:20:7: Assignment had no effect.
+      "@FileArg($_rebased_base_module_build_config:deps_info:version_code)"
+      ^--------------------------------------------------------------------
+You set the variable "_base_module_version_code" here and it was unused before it went
+out of scope.
+
+Via these template invocations:
+  system_webview_bundle("system_webview_bundle")  //android_webview/BUILD.gn:101
+
+See //android_webview/BUILD.gn:101:3: whence it was called.
+  system_webview_bundle("system_webview_bundle") {
+  ^-----------------------------------------------
+See //BUILD.gn:406:9: which caused the file to be included.
+        "//android_webview:empty_group",
+        ^------------------------------
+
+
+
+................................................................................
+
+115 版本开始， install-build-deps.sh 调用 同名 py 文件
+
+https://chromium.googlesource.com/chromium/src/+/HEAD/build/install-build-deps.sh
+https://chromium.googlesource.com/chromium/src/+log/HEAD/build/install-build-deps.sh
+
+最后一个 bash 版本：
+https://chromium.googlesource.com/chromium/src/+/050417b30319b9a97a78d6aa29c2fc3e7805d65a/build/install-build-deps.sh
+
+下载：
+curl "https://chromium.googlesource.com/chromium/src/+/050417b30319b9a97a78d6aa29c2fc3e7805d65a/build/install-build-deps.sh?format=TEXT" | base64 -d >install-build-deps.sh
+
+
+
+................................................................................
+
+其他 Hooks:
+# https://chromium.googlesource.com/chromium/src/+/HEAD
+# https://chromium.googlesource.com/chromium/tools/depot_tools/+/HEAD/gclient.py
+# https://chromium.googlesource.com/chromium/tools/depot_tools/+/HEAD/download_from_google_storage.py
+
+gclient runhooks --verbose
+....................................
+
+python3 src/build/download_nacl_toolchains.py --mode nacl_core_sdk sync --extract
+
+python3 src/build/linux/sysroot_scripts/install-sysroot.py --arch=x86
+python3 src/build/linux/sysroot_scripts/install-sysroot.py --arch=x64
+
+python3 src/tools/clang/scripts/update.py
+python3 src/tools/rust/update_rust.py
+
+python3 src/tools/clang/scripts/update.py --package=objdump
+
+python3 src/build/util/lastchange.py -o src/build/util/LASTCHANGE
+python3 src/build/util/lastchange.py -m GPU_LISTS_VERSION --revision-id-only --header src/gpu/config/gpu_lists_version.h
+python3 src/build/util/lastchange.py -m SKIA_COMMIT_HASH -s src/third_party/skia --header src/skia/ext/skia_commit_hash.h
+python3 src/build/util/lastchange.py -s src/third_party/dawn --revision src/gpu/webgpu/DAWN_VERSION
+
+
+# tools/download_optimization_profile.py 的 Shebang 是 vpython3，直接python运行并不会报错
+
+python3 src/tools/download_optimization_profile.py --newest_state=src/chrome/android/profiles/newest.txt --local_state=src/chrome/android/profiles/local.txt --output_name=src/chrome/android/profiles/afdo.prof --gs_url_base=chromeos-prebuilt/afdo-job/llvm
+python3 src/tools/download_optimization_profile.py --newest_state=src/chrome/android/profiles/arm.newest.txt --local_state=src/chrome/android/profiles/arm.local.txt --output_name=src/chrome/android/profiles/arm.afdo.prof --gs_url_base=chromeos-prebuilt/afdo-job/llvm
+
+python3 src/content/test/gpu/gpu_tests/mediapipe_update.py
+python3 src/third_party/gvr-android-sdk/test-apks/update.py
+python3 src/third_party/arcore-android-sdk/test-apks/update.py
+python3 src/build/android/download_doclava.py
+python3 src/v8/tools/builtins-pgo/download_profiles.py download --depot-tools src/third_party/depot_tools
+python3 src/testing/generate_location_tags.py --out src/testing/location_tags.json
+
+
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-clang-format -s src/buildtools/linux64/clang-format.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --extract --no_auth --bucket chromium-fonts -s src/third_party/test_fonts/test_fonts.tar.gz.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_auth --quiet --bucket chromium-webrtc-resources -d src/third_party/opus/tests/resources
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-instrumented-libraries -s src/third_party/instrumented_libraries/binaries/msan-chained-origins-focal.tgz.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-instrumented-libraries -s src/third_party/instrumented_libraries/binaries/msan-no-origins-focal.tgz.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth -u --bucket v8-wasm-fuzzer -s src/v8/test/fuzzer/wasm_corpus.tar.gz.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --extract --no_auth --bucket chromium-nodejs/16.13.0 -s src/third_party/node/linux/node-linux-x64.tar.gz.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-telemetry -s src/tools/perf/page_sets/maps_perf_test/load_dataset.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --num_threads=4 --bucket chromium-binary-patching/zucchini_testdata --recursive -d src/components/zucchini
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-gvr-static-shim -d src/third_party/gvr-android-sdk
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-gvr-static-shim/controller_test_api -s src/third_party/gvr-android-sdk/test-libraries/controller_test_api.aar.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_resume --no_auth --bucket chromium-ads-detection -s src/third_party/subresource-filter-ruleset/data/UnindexedRules.sha1
+python3 src/third_party/depot_tools/download_from_google_storage.py --no_auth --quiet --bucket chromium-style-perftest -d src/third_party/blink/renderer/core/css/perftest_data

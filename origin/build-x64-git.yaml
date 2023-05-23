@@ -1,0 +1,70 @@
+name: Build-Linux64-Git
+on:
+  workflow_dispatch:
+  #schedule:
+    #- cron:  '* */7 * * *'  #Runs every minute, every 7 hours.
+    #https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions
+
+jobs:
+   build-x64-git:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Check
+        run: bash -e script/check
+      - name: Pre
+        run: |
+          #sudo dd if=/dev/zero of=/mnt/swap.bld bs=1k status=progress count=4M
+          #sudo mkswap /mnt/swap.bld; sudo chmod 0600 /mnt/swap.bld
+          #sudo swapon /mnt/swap.bld
+          bash -e script/binary #https://chrome-infra-packages.appspot.com/p/gn/gn/linux-amd64/+/
+          echo ' '; df -hT; echo ' '; sudo dmesg -T | head; echo ' '; swapon -v
+
+      - name: Recovery Task (if exist)
+        run: |
+          [ -n "$(<VERSION)" ] && ver="$(<VERSION)" || ver=main
+          [ -d "src-$ver" ] || touch ${ver}_FIRST_BUILD
+          [ ! -d "build-$ver" ] || bash -e script/recovery
+
+      - name: Get Sources --> Clone Repositories
+        run: |
+          [ -n "$(<VERSION)" ] && ver="$(<VERSION)" || ver=main #https://chromiumdash.appspot.com/releases?platform=Linux
+          [ ! -e "${ver}_FIRST_BUILD" ] || git clone --depth=2 https://chromium.googlesource.com/chromium/src -b "$ver"
+          git clone --depth=1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
+          [ ! -d "src-$ver" ] || bash -e script/rec-src
+          echo ' '; cat src/chrome/VERSION; echo ' '
+
+      - name: Rsync Or Backup
+        run: bash -e script/rsync
+      - name: Install bld-deps
+        run: |
+          export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
+          export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
+          cd src
+          sudo apt-get update
+          echo -e '\n\nUpgrading...'
+          sudo apt-get upgrade -y
+          echo -e '\n\nInstalling build dependencies......'
+          ./build/install-build-deps.sh --no-syms --no-android --no-arm --no-chromeos-fonts
+          echo ' '; node_ver='v18.16.0'
+          wget -nv -c "https://nodejs.org/dist/${node_ver}/node-${node_ver}-linux-x64.tar.xz"
+          install -d third_party/node/linux/node-linux-x64
+          tar xf "node-${node_ver}-linux-x64.tar.xz" --strip-components=1 -C third_party/node/linux/node-linux-x64
+          third_party/node/linux/node-linux-x64/bin/node --version && rm "node-${node_ver}-linux-x64.tar.xz"
+          cd ..
+          rm -rf $HOME/{,.}{vpython,VPY}* depot_tools || true
+          rm -rf src/.git
+          echo ' '; df -Th; echo ' '; swapon -v
+
+      - name: Setup Build Config
+        run: bash -e script/conf
+      - name: Build
+        run: |
+          bash -e script/build
+          echo ' '; df -Th; echo ' '; swapon -v
+      - name: Package
+        run: bash -e script/package
+      - name: Push To tags or branch
+        run: bash -e script/push

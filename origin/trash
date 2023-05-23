@@ -1,0 +1,14 @@
+sudo dd if=/dev/zero of=/mnt/swap.bld bs=1k status=progress count=4M
+sudo mkswap /mnt/swap.bld; sudo chmod 0600 /mnt/swap.bld; sudo swapon /mnt/swap.bld
+
+./build/install-build-deps.sh --no-syms --no-android --no-arm --no-chromeos-fonts
+
+sudo apt-get update
+echo -e '\n\nUpgrading...'; sudo apt-get upgrade -y
+
+
+jobs:
+  build-public:
+    runs-on: ubuntu-22.04
+    # ubuntu-latest   windows-latest
+    #https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on

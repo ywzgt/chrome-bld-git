@@ -1,0 +1,30 @@
+#!/bin/bash
+
+git config --global advice.detachedHead false
+git config --global http.postBuffer 2147483648
+
+_retry() {
+	a="$2"
+	for ((i=1;i<=a;i++)); do
+		echo
+		echo "Retrying ... $i"
+		$1 || true
+	done
+}
+
+case "$3" in
+	[0-9]*)
+		num="$3"
+		;;
+	*)
+		num=5
+		;;
+esac
+case "$1" in
+	src)
+		_retry "git clone --depth=1 https://chromium.googlesource.com/chromium/src -b $2" $num
+		;;
+	depot)
+		_retry "git clone --depth=1 https://chromium.googlesource.com/chromium/tools/depot_tools.git" $num
+		;;
+esac

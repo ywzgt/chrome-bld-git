@@ -1,0 +1,88 @@
+#!/bin/bash
+
+
+ver="$(<VERSION)"
+branch="main"
+git config --global user.name 'github-actions'
+git config --global user.email 'noreply@github.com'
+
+export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
+export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
+
+
+_rsync_src() {
+	[ -e '.gclient' ] || mv config/gclient .gclient
+	echo 'Sync cache does not exist, run gclient sync.'
+	gclient sync --no-history --nohooks
+
+	src/build/util/lastchange.py -o src/build/util/LASTCHANGE
+	src/build/util/lastchange.py -m GPU_LISTS_VERSION --revision-id-only --header src/gpu/config/gpu_lists_version.h
+	src/build/util/lastchange.py -m SKIA_COMMIT_HASH -s src/third_party/skia --header src/skia/ext/skia_commit_hash.h
+	src/build/util/lastchange.py -s src/third_party/dawn --revision src/gpu/webgpu/DAWN_VERSION
+	src/tools/update_pgo_profiles.py --target=linux update --gs-url-base=chromium-optimization-profiles/pgo_profiles
+	download_from_google_storage.py --no_resume --extract --no_auth --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
+	find src/third_party/jdk/current -type f -delete
+
+	_pack_src
+}
+
+_pack_src() {
+	mkdir -v "src-$ver"
+	pushd src >/dev/null 2>&1
+	#git rm -rf . >/dev/null
+	echo ':: Package the synchronized cache as tar, Using xz Compression...'
+	tar cf - .|xz -T0 >../src-$ver/$ver.src.tar.xz
+	printf 'done.\n'
+	printf "Print information for file '$ver.src.tar.xz' to src.file.txt..."
+	cd ../src-$ver
+	ls -l $ver.src.tar.xz >src.file.txt
+	file $ver.src.tar.xz >>src.file.txt
+	tar tvf $ver.src.tar.xz >>src.file.txt
+	printf 'done.\n\n'
+	du -sh $ver.src.tar.xz; echo ' '
+	split -d -b 49m $ver.src.tar.xz $ver.src.part.tar.xz. --verbose
+	sha512sum $ver.src.* >sha512
+
+	git add src.file.txt sha512
+	#(cd ../src; git checkout $ver .)
+
+	#upload files
+	while true; do
+		_push_github
+		test -n "$(find . -name $ver.src.part.tar.xz.'[0-9]*')" || break
+	done
+	rm $ver.src.tar.xz
+	find . -name $ver.src.part.tar.xz.'[0-9]*' -delete
+	popd &>/dev/null
+}
+
+_push_github() {
+	local a f
+	while test $((a)) -lt 39; do
+		f="$(find . -name $ver.src.part.tar.xz.'[0-9]*'|sort|head -1)"
+		test -n "$f" || break
+		git add $f && rm $f
+		((a++)) || true
+	done
+	git commit -m "uploaded in $(date|sed 's/\ 202[0-9]$//')"
+	git push origin "$branch"
+}
+
+_rsync_tools() {
+	pushd src >/dev/null 2>&1
+	python3 tools/clang/scripts/update.py
+	python3 build/linux/sysroot_scripts/install-sysroot.py --arch=amd64
+	popd >/dev/null 2>&1
+	[ ! -d out ] || mv -v out src/
+}
+
+_docmd() {
+	if [ -d "src-$ver" ]; then
+		_rsync_tools
+	else
+		_rsync_src #First run, package directory src-$ver
+		_rsync_tools
+	fi
+}
+
+_docmd

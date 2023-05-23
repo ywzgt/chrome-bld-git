@@ -1,0 +1,75 @@
+name: Build-Android-Webview+Chromium
+on:
+  workflow_dispatch:
+  #schedule:
+    #- cron: '05 08 * * *'      #Runs at 08:05 UTC  https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions#onschedule
+    #- cron: '5 14,20 7 5 0' #Runs at 14:05 and 20:05, on day 7 of the month, and on Sunday, only in May. UTC (Two triggers: specific date, the day of the week)
+    #- cron: '5 02,08 8 5 *' #Runs at 02:05 and 08:05, on day 8 of the month, only in May. UTC (One trigger: specific date)
+    #- cron: '45 11,17,23 17 5 *'
+    #- cron: '55 5,11,17,23 18 5 *'
+    #- cron: '05 5,11,17,23 19 5 *'
+
+jobs:
+  build-monochrome:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: monochrome
+
+      - name: Check
+        run: |
+          printf 'Processor: '; cat /proc/cpuinfo|grep processor|wc -l
+          cat /proc/cpuinfo|grep 'model name'|head -1
+          cat /proc/meminfo|head; echo ' '
+          bash -e script/00-check
+        env:
+          Actions_Token: ${{ secrets.ACTION_KEY }}
+
+      - name: Cleaning up storage
+        run: bash -e script/01-clean
+      - name: Get-binary
+        run: |
+          uname -a
+          echo ' '; df -hT; echo ' '; sudo dmesg -T | head; echo ' '; swapon -v; echo ' '
+          bash -e script/02-binary #https://chrome-infra-packages.appspot.com/p/gn/gn/linux-amd64/+/
+          curl -sLO https://github.com/ywzgt/chrome-bld-git/raw/main/retry || true
+      - name: Recovery Task (if exist)
+        run: |
+          [ -n "$(<VERSION)" ] && ver="$(<VERSION)" || ver=main
+          [ ! -d "build-$ver" ] || bash -e script/03-recovery
+      - name: Get Sources --> Clone Repositories
+        run: |
+          [ -n "$(<VERSION)" ] && ver="$(<VERSION)" || ver=main #https://chromiumdash.appspot.com/releases?platform=Linux
+          git clone --depth=1 https://chromium.googlesource.com/chromium/tools/depot_tools.git || bash -e retry depot
+          git clone --depth=1 https://chromium.googlesource.com/chromium/src.git -b "$ver" || bash -e retry src "$ver"
+          echo ' '; cat src/chrome/VERSION
+
+      - name: Rsync Code
+        run: bash -e script/04-rsync
+      - name: Install bld-deps
+        run: |
+          export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
+          export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
+          node_ver="$(<version_node)"; cd src
+          echo '::Installing build dependencies......'
+          install-build-deps --no-syms --android --no-chromeos-fonts
+          echo ' '
+          wget -nv -c "https://nodejs.org/dist/${node_ver}/node-${node_ver}-linux-x64.tar.xz"
+          install -d third_party/node/linux/node-linux-x64
+          tar xf "node-${node_ver}-linux-x64.tar.xz" --strip-components=1 -C third_party/node/linux/node-linux-x64
+          third_party/node/linux/node-linux-x64/bin/node --version && rm "node-${node_ver}-linux-x64.tar.xz"
+          cd ..; rm -rf $HOME/{,.}{vpython,VPY}* depot_tools || true
+          rm -rf src/.git; echo ' '; df -Th; echo ' '; swapon -v
+
+      - name: Setup Build Config
+        run: bash -e script/05-conf
+      - name: Build
+        run: |
+          bash -e script/06-build
+          echo ' '; df -Th; echo ' '; free -h
+      - name: Package
+        run: bash -e script/07-package
+      - name: Push To tags or branch
+        run: bash -e script/08-push

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+ver="$(<VERSION)"
+build_dir="src/out/linux64"
+
+export PATH="$PWD/bin":$PATH
+
+_docmd() {
+	if [ -f ${ver}_FIRST_BUILD ]; then
+		timeout 16200 ninja -C $build_dir chrome/installer/linux:stable_deb || true
+	else
+		timeout 19000 ninja -C $build_dir chrome/installer/linux:stable_deb || true
+	fi
+}
+
+_docmd
