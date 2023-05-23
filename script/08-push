@@ -1,0 +1,67 @@
+#!/bin/bash
+
+ver="$(<VERSION)"
+branch="$(<branch)"
+export TZ='Asia/Shanghai'
+TAG="$ver"
+
+_push_deb(){
+	#Create a file to declare that the compilation is complete
+	touch "BUILD_${ver}_COMPLETE"
+	git add "BUILD_${ver}_COMPLETE"
+	[ ! -f 'EPOCH' ] || git rm EPOCH
+	git commit -m "build $ver complete. $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+
+	#removed build-$ver in script/recovery,update main branch
+	git push origin "$branch"
+
+	install -d DEST
+	mv chromium*${ver}*.deb DEST/
+	git rm -rf .
+	mv DEST/* .
+	git add chromium*${ver}*.deb
+	git commit -m "$TAG"
+	git checkout --orphan new_tag
+	git commit -m "Builded in $(date)"
+	echo; ls -l
+	echo
+
+	#Creating tag and push
+	git tag "${TAG}" --force
+	git push origin "${TAG}" --force
+}
+
+_push_bld_part() {
+	git add build-$ver
+	git commit -m "Pushed build-cache in $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+	git push origin "$branch"
+}
+
+_retry_push() {
+	for ((i=1;i<=5;i++)); do
+		echo
+		echo "Retrying push... $i"
+		git config --global http.postBuffer 2147483648
+		git push origin "$1" || echo "$?" >return
+	done
+	[ ! -e 'return' ] || return $(<return)
+}
+
+_docmd() {
+	pushd "../progress" >/dev/null 2>&1
+	if [ -e "In_progress_${branch}_Git" ]; then
+		git pull --no-tags
+		git rm "In_progress_${branch}_Git"
+		git commit -m "<${branch}> completed, $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+		git push || true
+	fi
+	popd >/dev/null 2>&1
+
+	if [ -e "PUSH_CHROMIUM_${ver}_DEB" ]; then
+		_push_deb || _retry_push "${TAG}"
+	else
+		_push_bld_part || _retry_push "$branch"
+	fi
+}
+
+_docmd

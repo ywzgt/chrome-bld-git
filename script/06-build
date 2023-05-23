@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+ver="$(<VERSION)"
+build_dir="src/out/linux64"
+export NINJA_STATUS="[%r %f/%t] "
+export PATH="$PWD/bin":$PATH
+
+_docmd() {
+	timeout 18000 ninja -C $build_dir chrome/installer/linux:stable_deb || true
+}
+
+_docmd

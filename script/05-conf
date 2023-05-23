@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+_docmd() {
+	local build_dir="src/out/linux64"
+	if [ -f "${build_dir}/build.ninja" ]
+	then
+		echo "The file '${build_dir}/build.ninja' already exists, skipping!"
+	else
+		[ -d "${build_dir}" ] || mkdir -pv "${build_dir}"
+		export PATH="$PWD/bin":$PATH
+		cp config/args.gn ${build_dir}/args.gn
+	    pushd src >/dev/null 2>&1
+		echo '  -> Gen args.gn ...'
+		gn gen "${build_dir#src/}" --filters=//chrome
+	    popd >/dev/null 2>&1
+	fi
+}
+
+_docmd
