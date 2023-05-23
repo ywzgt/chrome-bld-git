@@ -1,0 +1,25 @@
+#!/bin/bash
+
+remove() {
+	echo "::Delete '$@'"
+	sudo rm -rf $@
+}
+
+run() {
+	echo "::Run '$@':"
+	$@
+	echo
+}
+
+case $(lsb_release --id) in
+	*Ubuntu*)
+		remove /usr/share/swift
+		remove /usr/share/miniconda
+		remove /usr/share/dotnet
+		remove /usr/local
+		remove /opt/hostedtoolcache
+		remove /etc/apt/sources.list.d
+		run df -Th
+		run lsb_release -a
+		;;
+esac

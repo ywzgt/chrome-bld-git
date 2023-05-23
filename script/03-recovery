@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ver="$(<VERSION)"
+
+_docmd() {
+	pushd build-$ver >/dev/null 2>&1
+	cat $ver.bld.part.tar.xz.[0-9]* > $ver.bld.tar.xz
+	sha512sum -c sha512
+	printf "  -> Extracting the $ver.bld.tar.xz..."
+	tar xf $ver.bld.tar.xz -C ..
+	printf ' done.\n'
+	popd >/dev/null 2>&1
+	rm -rf build-$ver
+}
+
+_docmd

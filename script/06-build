@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+ver="$(<VERSION)"
+build_dir="src/out/webview"
+export NINJA_STATUS="[%r %f/%t] "
+export PATH="$PWD/bin":$PATH
+
+_buildapks() {
+	echo
+	echo "Start building APKS..."
+	ninja -C "${build_dir}" system_webview_bundle system_webview_64_bundle
+}
+
+_docmd() {
+	timeout 16200 ninja -C $build_dir system_webview_apk && _buildapks || true
+}
+
+_docmd
