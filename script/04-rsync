@@ -1,0 +1,96 @@
+#!/bin/bash
+
+ver="$(<VERSION)"
+export PATH="$PWD/bin:$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
+export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
+
+if test -n "$(grep '^target_cpu' config/args.gn|grep 'x64')"; then
+	bit=64
+elif test -n "$(grep '^target_cpu' config/args.gn|grep 'x86')"; then
+	bit=32
+fi
+
+if [ -f 'EPOCH' ]; then
+	epoch="$(<EPOCH)"
+else
+	epoch="$(date +%s)"
+	echo "${epoch}" >EPOCH
+	git add EPOCH
+fi
+
+
+_rsync_src() {
+	[ -e '.gclient' ] || mv config/gclient .gclient
+	echo 'Run gclient sync...'
+	gclient sync --no-history --nohooks
+	src/build/util/lastchange.py -o src/build/util/LASTCHANGE
+	src/build/util/lastchange.py -m GPU_LISTS_VERSION --revision-id-only --header src/gpu/config/gpu_lists_version.h
+	src/build/util/lastchange.py -m SKIA_COMMIT_HASH -s src/third_party/skia --header src/skia/ext/skia_commit_hash.h
+	src/build/util/lastchange.py -s src/third_party/dawn --revision src/gpu/webgpu/DAWN_VERSION
+	#src/tools/update_pgo_profiles.py --target=win64 update --gs-url-base=chromium-optimization-profiles/pgo_profiles
+	download_from_google_storage.py --no_resume --extract --no_auth --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
+	find src/third_party/jdk/current -type f -delete
+
+	#cross tool
+	download_from_google_storage.py --no_resume --no_auth --bucket chromium-browser-clang/ciopfs -s src/build/ciopfs.sha1
+	echo 'done.'
+}
+
+_rsync_tools() {
+	echo
+	pushd src >/dev/null 2>&1
+	wget -c -nv "https://commondatastorage.googleapis.com/chromium-browser-clang/rc/$(cat build/toolchain/win/rc/linux64/rc.sha1)" \
+		-O build/toolchain/win/rc/linux64/rc
+	chmod +x build/toolchain/win/rc/linux64/rc
+
+	wget -c -nv "https://chrome-infra-packages.appspot.com/dl/infra/3pp/tools/7z/windows-amd64/+/latest" -O lzma-sdk-win64.zip
+	wget -c -nv "https://chrome-infra-packages.appspot.com/dl/infra/3pp/tools/7z/linux-amd64/+/latest" -O lzma-sdk-linux64.zip
+	unzip -o lzma-sdk-win64.zip 7z* -d third_party/lzma_sdk/bin/win64
+	unzip -o lzma-sdk-linux64.zip 7z* -d third_party/lzma_sdk/bin/host_platform
+	rm -f lzma-sdk-win64.zip lzma-sdk-linux64.zip
+
+	python3	build/vs_toolchain.py update --force
+	python3 tools/clang/scripts/update.py
+
+	case "${bit}" in
+		64)
+			python3 build/linux/sysroot_scripts/install-sysroot.py --arch=x64
+			;;
+		32)
+			python3 build/linux/sysroot_scripts/install-sysroot.py --arch=x64
+			python3 build/linux/sysroot_scripts/install-sysroot.py --arch=x86
+			;;
+	esac
+
+	popd >/dev/null 2>&1
+}
+
+_get_winsdk() {
+	echo
+	echo "::Get win_toolchain..."
+	git clone --depth=1 https://github.com/halgz/chromium-src.git -b "win_toolchain" WinToolchain
+	(
+	cd WinToolchain; echo; b2sum -c b2.hash
+	cat win_sdk.[0-9]* >win_sdk
+	echo; sha512sum -c sha512
+	rm -f win_sdk.[0-9]*
+	mv -v win_sdk "$(<filename).zip"
+	)
+	echo 'done.'
+	echo
+	echo "Set Win_cross ENV..."
+	export DEPOT_TOOLS_WIN_TOOLCHAIN_BASE_URL="$PWD/WinToolchain"; grep '^TOOLCHAIN_HASH' src/build/vs_toolchain.py|sed 's/\s//g' >tmpp; . ./tmpp
+	export GYP_MSVS_HASH_${TOOLCHAIN_HASH}="$(<$PWD/WinToolchain/filename)"; rm ./tmpp
+	echo "DEPOT_TOOLS_WIN_TOOLCHAIN_BASE_URL:: $DEPOT_TOOLS_WIN_TOOLCHAIN_BASE_URL"
+	echo "GYP_MSVS_HASH_${TOOLCHAIN_HASH}:: $(env|grep GYP_MSVS_HASH)"
+}
+
+_docmd() {
+	_rsync_src
+	_get_winsdk
+	_rsync_tools
+	find src -exec touch -cd @${epoch} {} +
+	[ ! -d out ] || mv -v out src/
+}
+
+_docmd

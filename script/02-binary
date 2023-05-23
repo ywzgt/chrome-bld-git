@@ -1,0 +1,23 @@
+#!/bin/bash
+
+gn_url="https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest"
+commit="050417b30319b9a97a78d6aa29c2fc3e7805d65a"
+
+_docmd() {
+	printf 'Download gn from CIPD Packages..'
+	wget -c -q "${gn_url}" -O gn.zip
+	[ -d bin ] || mkdir bin
+	unzip gn.zip gn -d bin >/dev/null
+	rm gn.zip
+	printf 'done.\n'
+
+	printf 'Download the latest version of Ninja from GitHub...'
+	wget -c -q https://github.com/ninja-build/ninja/releases/latest/download/ninja-linux.zip
+	unzip ninja-linux.zip ninja -d bin >/dev/null
+	rm ninja-linux.zip
+	printf 'done.\n'
+
+	chmod 755 bin/{gn,ninja}
+}
+
+_docmd

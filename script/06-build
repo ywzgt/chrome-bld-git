@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if test -n "$(grep '^target_cpu' config/args.gn|grep 'x64')"; then
+	bit=64
+elif test -n "$(grep '^target_cpu' config/args.gn|grep 'x86')"; then
+	bit=32
+fi
+build_dir="src/out/win$bit"
+ver="$(<VERSION)"
+export NINJA_STATUS="[%r %f/%t] "
+export PATH="$PWD/bin":$PATH
+
+_docmd() {
+	timeout 18000 ninja -C "${build_dir}" mini_installer || true
+}
+
+_docmd

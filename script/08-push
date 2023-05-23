@@ -1,0 +1,95 @@
+#!/bin/bash
+
+if test -n "$(grep '^target_cpu' config/args.gn|grep 'x64')"; then
+	bit=64
+elif test -n "$(grep '^target_cpu' config/args.gn|grep 'x86')"; then
+	bit=32
+fi
+
+ver="$(<VERSION)"
+branch="$(<branch)"
+export TZ='Asia/Shanghai'
+TAG="${ver}-win${bit}"
+
+_check_size() {
+	local exe f s
+	pushd "$1" >/dev/null 2>&1
+	sha256sum *.exe >sha256
+	sha512sum *.exe >sha512
+	for exe in *.exe; do
+		xz -T0 "$exe"
+		f="$exe.xz"
+		s="$(du -s $f|awk '{print$1}')"
+		sha256sum "$f" >>sha256
+		sha512sum "$f" >>sha512
+		if ((s>102400)); then
+			split -d -b 100m "$f" "$f." --verbose
+			sha256sum "$f"* >>sha256.txt
+			sha512sum "$f"* >>sha512.txt
+			rm $f
+		fi
+	done
+	popd >/dev/null 2>&1
+}
+
+_push_exe(){
+	touch "BUILD_${ver}_COMPLETE"
+	git add "BUILD_${ver}_COMPLETE"
+	[ ! -f 'EPOCH' ] || git rm EPOCH
+	git commit -m "build $ver complete. $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+	git push origin "$branch"
+
+	install -d DEST
+	mv *.exe DEST/
+	_check_size DEST
+	git rm -rf .
+	mv DEST/* .
+	git add *.exe*
+	git add sha256 sha512
+	[ ! -f 'sha256.txt' ] || git add sha256.txt
+	[ ! -f 'sha512.txt' ] || git add sha512.txt
+	git commit -m "$TAG"
+	git checkout --orphan new_tag
+	git commit -m "Builded in $(date)"
+
+	echo; ls -l; echo
+
+	#Creating tag and push
+	git tag "${TAG}" --force
+	git push origin "${TAG}" --force
+}
+
+_push_bld_part() {
+	git add build-$ver
+	git commit -m "Pushed build-cache in $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+	git push origin "$branch"
+}
+
+_retry_push() {
+	for ((i=1;i<=5;i++)); do
+		echo
+		echo "Retrying push... $i"
+		git config --global http.postBuffer 2147483648
+		git push origin "$1" || echo "$?" >return
+	done
+	[ ! -e 'return' ] || return $(<return)
+}
+
+_docmd() {
+	pushd "../progress" >/dev/null 2>&1
+	if [ -e "In_progress_${branch}_Git" ]; then
+		git pull --no-tags
+		git rm "In_progress_${branch}_Git"
+		git commit -m "<${branch}> completed, $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+		git push || true
+	fi
+	popd >/dev/null 2>&1
+
+	if [ -e "PUSH_CHROMIUM_${ver}_EXE" ]; then
+		_push_exe || _retry_push "${TAG}"
+	else
+		_push_bld_part || _retry_push "$branch"
+	fi
+}
+
+_docmd

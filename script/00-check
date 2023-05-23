@@ -1,0 +1,80 @@
+#!/bin/bash
+
+wget -cq 'https://github.com/ywzgt/chrome-bld-git/raw/main/version_node'
+wget -cq 'https://raw.githubusercontent.com/ywzgt/chrome-bld-git/main/VERSION'
+ver="$(<VERSION)"
+branch="$(<branch)"
+export TZ='Asia/Shanghai'
+git config --global user.name 'github-actions'
+git config --global user.email 'noreply@github.com'
+git config --global init.defaultbranch main
+git config --global advice.detachedHead false
+
+_remove() {
+	git config remote.origin.fetch "+refs/heads/${branch}:refs/remotes/origin/${branch}"
+	git fetch --unshallow --no-tags
+	echo '::The space used by the git repository is:'
+	du -sh $PWD; git count-objects -vH; echo
+
+	echo "Removing history for directory 'build-$ver' from git trace..."
+	export FILTER_BRANCH_SQUELCH_WARNING=1
+	git filter-branch --index-filter "git rm -r --cached --ignore-unmatch --ignore-unmatch build-${ver}" --prune-empty --tag-name-filter cat -- --all
+	rm -rf .git/refs/original .git/logs
+	git gc --prune=now; echo
+
+	echo '::The space used by the git repository is:'
+	du -sh $PWD; git count-objects -vH; echo
+
+	git push --force origin $branch
+	echo; du -sh; git count-objects -vH; echo
+}
+
+_move_git() {
+	echo
+	printf 'Move directory .git to /mnt...'
+	sudo mkdir "/mnt/git_dir_${ver}"
+	sudo chown $(id -u):$(id -g) -R "/mnt/git_dir_${ver}"
+	mv .git "/mnt/git_dir_${ver}"
+	ln -s "/mnt/git_dir_${ver}/.git" .
+	printf 'done.\n'
+	ls -l .git
+}
+
+_progress() {
+	local cpu_hz="$(awk '/model name/' /proc/cpuinfo|head -1)"
+	cpu_hz="${cpu_hz##*@}"
+	cpu_hz="${cpu_hz%GHz}"
+	cpu_hz="${cpu_hz/.}"
+
+	test -d "../progress" || mkdir ../progress
+	pushd "../progress" >/dev/null 2>&1
+	git init
+	git remote add origin "https://${Actions_Token}@github.com/ywzgt/action-progress.git"
+	git pull origin main --no-tags
+
+	if [ -f "In_progress_${branch}_Git" ]; then
+		echo "This actions is running, exit!"
+		exit 123
+	elif ((cpu_hz>=260)); then
+		echo; touch "In_progress_${branch}_Git"
+		git add "In_progress_${branch}_Git"
+		git commit -m "<${branch}> in progress, $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+		git push -u origin main
+	fi
+
+	popd >/dev/null 2>&1
+}
+
+_docmd() {
+	if [ -f "BUILD_${ver}_COMPLETE" ]; then
+		_remove
+		echo "The file 'BUILD_${ver}_COMPLETE' already exists, skipping build!"
+		exit 123
+	else
+		echo "The file 'BUILD_${ver}_COMPLETE' does not exist, building now!"
+		_progress
+		_move_git
+	fi
+}
+
+_docmd
