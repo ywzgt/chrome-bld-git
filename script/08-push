@@ -1,0 +1,105 @@
+#!/bin/bash
+
+ver="$(<VERSION)"
+branch="$(<branch)"
+TAG="${ver}-${branch}"
+export TZ='Asia/Shanghai'
+
+_check_size() {
+	local apk f s
+	pushd "$1" >/dev/null 2>&1
+	sha256sum *.aab *.apk >sha256
+	sha512sum *.aab *.apk >sha512
+	for apk in *.aab *.apk; do
+		xz -T0 "$apk"
+		f="$apk.xz"
+		s="$(du -s $f|awk '{print$1}')"
+		sha256sum "$f" >>sha256
+		sha512sum "$f" >>sha512
+		if ((s>102400)); then
+			split -d -b 100m "$f" "$f." --verbose
+			sha256sum "$f"* >>sha256.txt
+			sha512sum "$f"* >>sha512.txt
+			rm $f
+		fi
+	done
+	popd >/dev/null 2>&1
+}
+
+_push_apk(){
+	#Create a file to declare that the compilation is complete
+	touch "BUILD_${ver}_COMPLETE"
+	git add "BUILD_${ver}_COMPLETE"
+	[ ! -f 'EPOCH' ] || git rm EPOCH
+	git commit -m "build $ver complete. $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+	git push origin "$branch"
+
+	install -d DEST
+	mv *.aab *.apk DEST/
+	_check_size DEST
+	git rm -rf .
+	mv DEST/* .
+	git add *.aab *.apk
+	git add sha256 sha512
+	[ ! -f 'sha256.txt' ] || git add sha256.txt
+	[ ! -f 'sha512.txt' ] || git add sha512.txt
+	git commit -m "$TAG"
+	git checkout --orphan new_tag
+	git commit -m "Builded in $(date)"
+	echo; ls -l
+	echo
+
+	git tag "${TAG}" --force
+	git push origin "${TAG}" --force
+}
+
+_push_bld_part() {
+	_push_github() {
+		local a f
+		while test $((a)) -lt 39; do
+			f="$(find . -name $ver.bld.part.tar.xz.'[0-9]*'|sort|head -1)"
+			test -n "$f" || break
+			git add $f && rm $f
+			((a++)) || true
+		done
+		git commit -m "Pushed build-cache in $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+		git push origin "$branch" || _retry_push "$branch"
+	}
+
+	pushd build-$ver >/dev/null 2>&1
+	git add file.list sha512
+	while true; do
+		_push_github
+		test -n "$(find . -name $ver.bld.part.tar.xz.'[0-9]*')" || break
+	done
+	popd &>/dev/null
+}
+
+_retry_push() {
+	for ((i=1;i<=5;i++)); do
+		echo
+		echo "Retrying push... $i"
+		git config --global http.postBuffer 2147483648
+		git push origin "$1" || echo "$?" >return
+	done
+	[ ! -e 'return' ] || return $(<return)
+}
+
+_docmd() {
+	pushd "../progress" >/dev/null 2>&1
+	if [ -e "In_progress_${branch}_Git" ]; then
+		git pull --no-tags
+		git rm "In_progress_${branch}_Git"
+		git commit -m "<${branch}> completed, $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
+		git push || true
+	fi
+	popd >/dev/null 2>&1
+
+	if [ -e "PUSH_CHROMIUM_${ver}_APK" ]; then
+		_push_apk || _retry_push "${TAG}"
+	else
+		_push_bld_part
+	fi
+}
+
+_docmd

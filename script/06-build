@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+ver="$(<VERSION)"
+build_dir="src/out/monochrome"
+export NINJA_STATUS="[%r %f/%t] "
+export PATH="$PWD/bin":$PATH
+
+_build64() {
+	echo
+	echo "Start building pure 64-bit targets..."
+	sed '/^chrome_public_manifest_package/c\chrome_public_manifest_package = "org.chromium"' -i "${build_dir}/args.gn"
+	ninja -C "${build_dir}" monochrome_64_public_bundle_apks monochrome_64_public_apk monochrome_32_public_bundle
+}
+
+_docmd() {
+	timeout 16200 ninja -C "${build_dir}" monochrome_64_32_public_bundle_apks && _build64 || true
+}
+
+_docmd

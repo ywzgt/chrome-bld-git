@@ -1,0 +1,38 @@
+#!/bin/bash
+
+ver="$(<VERSION)"
+
+_pack() {
+	mkdir -v "build-$ver"
+	pushd src >/dev/null 2>&1
+	printf ':: Package the builded cache as tar, Using xz Compression...'
+	tar cf - out|xz -T0 >../build-$ver/$ver.bld.tar.xz
+	printf 'done.\n'
+
+	cd ../build-$ver
+	printf "Print information for file '$ver.bld.tar.xz' to file.list..."
+	file $ver.bld.tar.xz >file.list
+	ls -lh $ver.bld.tar.xz >>file.list
+	ls -l $ver.bld.tar.xz >>file.list
+	tar tvf $ver.bld.tar.xz|head -5000 >>file.list
+	printf 'done.\n\n'
+
+	du -sh $ver.bld.tar.xz; echo ' '
+	split -d -b 49m $ver.bld.tar.xz $ver.bld.part.tar.xz. --verbose
+	sha512sum $ver.bld.* >sha512
+	rm $ver.bld.tar.xz
+	popd &>/dev/null
+
+	exit 0
+}
+
+_docmd() {
+	cp src/out/*/apks/*.aab . || _pack
+	cp src/out/*/apks/*.apk . || true
+	echo 'Compile chromium complete.'
+	ls -l *.a*
+	file *.a*
+	touch PUSH_CHROMIUM_${ver}_APK
+}
+
+_docmd
