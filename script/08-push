@@ -39,7 +39,7 @@ _push_apk(){
 	_check_size DEST
 	git rm -rf .
 	mv DEST/* .
-	git add *.apk *.aab
+	git add *.apk* *.aab*
 	git add sha256 sha512
 	[ ! -f 'sha256.txt' ] || git add sha256.txt
 	[ ! -f 'sha512.txt' ] || git add sha512.txt
