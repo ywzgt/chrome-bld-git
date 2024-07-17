@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: monochrome
 
@@ -52,7 +52,8 @@ jobs:
         run: |
           export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
           export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
-          node_ver="$(<version_node)"; cd src
+          node_ver="$(curl -sL https://nodejs.org | sed -n 's/.*\/\(v[0-9].*\)\/node-.*/\1/p')" || node_ver="$(<version_node)"
+          cd src
           echo '::Installing build dependencies......'
           install-build-deps --no-syms --android --no-chromeos-fonts
           echo ' '
@@ -73,3 +74,16 @@ jobs:
         run: bash -e script/07-package
       - name: Push To tags or branch
         run: bash -e script/08-push
+
+      - name: Upload to Releases
+        if: env.TAG_VERSION
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: ${{ env.TAG_VERSION }}
+          body: monochrome ${{ env.TAG_VERSION }}
+          files: apk/*
+          fail_on_unmatched_files: true
+          prerelease: false
+      - name: Setup tmate ssh session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
