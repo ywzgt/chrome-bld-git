@@ -34,12 +34,20 @@ _push_apk(){
 	git commit -m "build $ver complete. $(date|sed -e 's/20[0-9][0-9]$//' -e 's/CST//')"
 	git push origin "$branch"
 
+	mkdir apk
+	for i in *.aab *.apk; do
+		[ -e "$i" ] || continue
+		sha256sum "$i" > apk/"$i.sha256"
+		mv "$i" apk
+	done
+	return 0
+
 	install -d DEST
 	mv *.aab *.apk DEST/
 	_check_size DEST
 	git rm -rf .
 	mv DEST/* .
-	git add *.aab *.apk
+	git add *.aab* *.apk*
 	git add sha256 sha512
 	[ ! -f 'sha256.txt' ] || git add sha256.txt
 	[ ! -f 'sha512.txt' ] || git add sha512.txt
