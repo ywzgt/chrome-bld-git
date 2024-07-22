@@ -20,7 +20,6 @@ enable_hangout_services_extension = false
 enable_iterator_debugging = false
 enable_mdns = false
 enable_nacl = false
-enable_vr = false
 exclude_unwind_tables = true
 ffmpeg_branding = "Chrome"
 proprietary_codecs = true

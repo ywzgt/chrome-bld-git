@@ -3,18 +3,55 @@
 
 ver="$(<VERSION)"
 build_dir="src/out/monochrome"
-export NINJA_STATUS="[%r %f/%t] "
+export NINJA_STATUS="[%r %f/%t %es] "
 export PATH="$PWD/bin":$PATH
+export REBASELINE_PROGUARD=1
 
 _build64() {
 	echo
 	echo "Start building pure 64-bit targets..."
 	sed '/^chrome_public_manifest_package/c\chrome_public_manifest_package = "org.chromium"' -i "${build_dir}/args.gn"
-	ninja -C "${build_dir}" monochrome_64_public_bundle monochrome_64_public_apk monochrome_32_public_bundle
+	ninja -C "${build_dir}" monochrome_64_public_bundle monochrome_64_public_apk monochrome_32_public_bundle chrome_public_apk
+}
+
+_ck_status() {
+	local a=$?
+	local f h
+
+	for f in page_info/page_info_buildflags.h \
+		resource_coordinator/lifecycle_unit_state.mojom{,-forward}.h
+	do
+		h="${build_dir}/gen/chrome/browser/$f"
+		if [ ! -f "src/${h#*/gen/}" ]; then
+			ln -sv ../../../${h#src/} "src/${h#*/gen/}"
+		else
+			return $a
+		fi
+	done
+
+	ninja -C "${build_dir}" gen/chrome/browser/resource_coordinator/lifecycle_unit_state.mojom-forward.h
+	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle $* && _build64 || _exit
 }
 
 _docmd() {
-	timeout 16200 ninja -C "${build_dir}" monochrome_64_32_public_bundle && _build64 || true
+	local targets=(
+		trichrome_chrome_bundle  # only bundle
+		trichrome_library_apk  # only apk
+		trichrome_webview_apk  # or bundle
+		system_webview_apk
+	)
+
+	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle "${targets[@]}" && _build64 || _exit || _ck_status "${targets[@]}"
 }
 
+_exit() {
+	local a=$?
+	if pidof -q sleep; then
+		return $a
+	else
+		return 0
+	fi
+}
+
+sleep 16500 && pkill ninja &
 _docmd
