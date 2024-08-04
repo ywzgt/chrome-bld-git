@@ -38,7 +38,42 @@ _rsync_tools() {
 	popd >/dev/null 2>&1
 }
 
+_patch() {
+	local p ver_patches=(
+		Add-menu-item-to-bookmark-all-tabs
+		Add-support-for-writing-URIs  #dep
+		Inject-scripts-for-AMP-tracking-ads-and-video
+		Remove-binary-blob-integrations
+		Show-site-settings-for-cookies-javascript-and-ads
+		# https://github.com/uazo/cromite/blob/master/build/patches/
+	)
+
+	patch -Np1 -d src <patches/Eyeo-Adblock-for-Cromite.patch
+	patch -Np1 -d src <patches/User-agent-customization.patch
+
+	for p in ${ver_patches[@]}; do
+		if [[ -e patches/$p-${ver%%.*}.patch ]]; then
+			patch -Np1 -d src <patches/$p-${ver%%.*}.patch
+		else
+			patch -Np1 -d src <patches/$p.patch
+		fi
+	done
+
+	patch -Np1 -d src <patches/Restore-BookmarkToolbar-setCurrentFolder.patch  #dep
+	patch -Np1 -d src <patches/Add-bookmark-import-export-actions.patch
+}
+
 _docmd() {
+	patch -Np1 -d src <patches/kill-Vision.patch
+	patch -Np1 -d src <patches/kill-Location-fall-back-to-system.patch
+	patch -Np1 -d src <patches/kill-Auth.patch
+	patch -Np1 -d src <patches/Remove-binary-blob-integrations.patch
+	patch -Np1 -d src <patches/Remove-SMS-integration.patch
+	patch -Np1 -d src <patches/Remove-preload-of-com.google.android.gms.fonts.patch
+	patch -Np1 -d src <patches/Use-dummy-DFM-installer.patch
+	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
+	patch -Np1 -d src <patches/No-updater.patch
+
 	_rsync_src
 	_rsync_tools
 	find src -exec touch -cd @${epoch} {} +
