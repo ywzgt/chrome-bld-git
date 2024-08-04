@@ -10,6 +10,7 @@ _docmd() {
 	tar xf $ver.bld.tar.xz -C ..
 	printf ' done.\n'
 	popd >/dev/null 2>&1
+	git rm -r build-$ver
 	rm -rf build-$ver
 }
 

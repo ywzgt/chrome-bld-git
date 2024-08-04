@@ -40,6 +40,7 @@ _push_apk(){
 		sha256sum "$i" > apk/"$i.sha256"
 		mv "$i" apk
 	done
+	echo "TAG_VERSION=$ver" >> $GITHUB_ENV
 	return 0
 
 	install -d DEST
