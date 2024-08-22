@@ -41,8 +41,7 @@ _docmd() {
 		system_webview_apk
 	)
 
-	#ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle "${targets[@]}" && _build64 || _exit || _ck_status "${targets[@]}"
-	ninja -C "${build_dir}" chrome_public_apk || _exit || _ck_status "${targets[@]}"
+	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle "${targets[@]}" && _build64 || _exit || _ck_status "${targets[@]}"
 }
 
 _exit() {
