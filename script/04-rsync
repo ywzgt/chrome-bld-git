@@ -78,7 +78,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Use-dummy-DFM-installer.patch
 	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
 	patch -Np1 -d src <patches/No-updater.patch
-	for i in ${files[@]}; do cp $i{.ori,}; done
+	for i in ${files[@]}; do cp src/$i{.ori,}; done
 
 	_rsync_src
 	_rsync_tools
