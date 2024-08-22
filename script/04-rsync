@@ -68,7 +68,7 @@ _docmd() {
 		chrome/browser/language/android/java/src/org/chromium/chrome/browser/language/AppLanguagePromoDialog.java
 		chrome/browser/language/android/java/src/org/chromium/chrome/browser/language/settings/LanguageSettings.java
 	)
-	for i in ${files[@]}; do cp $i{,.ori}; done
+	for i in ${files[@]}; do cp src/$i{,.ori}; done
 	patch -Np1 -d src <patches/kill-Vision.patch
 	patch -Np1 -d src <patches/kill-Location-fall-back-to-system.patch
 	patch -Np1 -d src <patches/kill-Auth.patch
