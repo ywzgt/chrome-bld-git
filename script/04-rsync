@@ -68,7 +68,9 @@ _docmd() {
 		chrome/browser/language/android/java/src/org/chromium/chrome/browser/language/AppLanguagePromoDialog.java
 		chrome/browser/language/android/java/src/org/chromium/chrome/browser/language/settings/LanguageSettings.java
 	)
-	for i in ${files[@]}; do cp src/$i{,.ori}; done
+	#for i in ${files[@]}; do cp src/$i{,.ori}; done
+	wget -q 'https://github.com/uazo/cromite/raw/v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce/build/patches/Override-Navigator-Language.patch'
+
 	patch -Np1 -d src <patches/kill-Vision.patch
 	patch -Np1 -d src <patches/kill-Location-fall-back-to-system.patch
 	patch -Np1 -d src <patches/kill-Auth.patch
@@ -76,9 +78,10 @@ _docmd() {
 	patch -Np1 -d src <patches/Remove-SMS-integration.patch
 	patch -Np1 -d src <patches/Remove-preload-of-com.google.android.gms.fonts.patch
 	patch -Np1 -d src <patches/Use-dummy-DFM-installer.patch
+	patch -Np1 -d src <Override-Navigator-Language.patch
 	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
 	patch -Np1 -d src <patches/No-updater.patch
-	for i in ${files[@]}; do cp src/$i{.ori,}; done
+	#for i in ${files[@]}; do cp src/$i{.ori,}; done
 
 	_rsync_src
 	_rsync_tools
