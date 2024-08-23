@@ -107,4 +107,5 @@ cat > patches/Fix-errors.patch <<"EOF"
 EOF
 
 _docmd
+cp config/args.gn out/monochrome/args.gn
 (cd src; gn gen out/monochrome --filters=//chrome--filters=//chrome)
