@@ -1,13 +1,13 @@
 126.0.6478.188.bld.tar.xz: XZ compressed data, checksum CRC64
--rw-r--r-- 1 runner docker 1.7G Sep 30 13:40 126.0.6478.188.bld.tar.xz
--rw-r--r-- 1 runner docker 1797392056 Sep 30 13:40 126.0.6478.188.bld.tar.xz
+-rw-r--r-- 1 runner docker 1.7G Oct  1 14:55 126.0.6478.188.bld.tar.xz
+-rw-r--r-- 1 runner docker 1798328000 Oct  1 14:55 126.0.6478.188.bld.tar.xz
 drwxr-xr-x runner/docker     0 2024-08-20 04:28 out/
-drwxr-xr-x runner/docker     0 2024-09-30 13:28 out/monochrome/
+drwxr-xr-x runner/docker     0 2024-10-01 14:42 out/monochrome/
 drwxr-xr-x runner/docker     0 2024-08-20 04:28 out/monochrome/config/
 -rw-r--r-- runner/docker   938 2024-08-20 04:28 out/monochrome/config/Trichrome_size_config.json
--rw-r--r-- runner/docker 25373528 2024-09-30 13:28 out/monochrome/.ninja_log
+-rw-r--r-- runner/docker 25388090 2024-10-01 14:42 out/monochrome/.ninja_log
 -rw-r--r-- runner/docker      349 2024-08-20 04:28 out/monochrome/xvfb_py_unittests.runtime_deps
--rw------- runner/docker 11222208 2024-09-30 12:57 out/monochrome/build.ninja
+-rw------- runner/docker 11222208 2024-10-01 14:38 out/monochrome/build.ninja
 -rw-r--r-- runner/docker   240229 2024-08-20 04:28 out/monochrome/trichrome_webview_wpt_64.runtime_deps
 drwxr-xr-x runner/docker        0 2024-08-21 07:09 out/monochrome/resource_zips/
 drwxr-xr-x runner/docker        0 2024-08-21 07:09 out/monochrome/resource_zips/chrome/
@@ -33,9 +33,10 @@ drwxr-xr-x runner/docker        0 2024-09-30 13:18 out/monochrome/jsproto/compon
 -rw-r--r-- runner/docker     5789 2024-09-30 13:06 out/monochrome/jsproto/components/reporting/proto/synced/session_affiliated_user.js
 -rw-r--r-- runner/docker    35743 2024-08-20 04:28 out/monochrome/system_webview_crx_smoke_tests.runtime_deps
 drwxr-xr-x runner/docker        0 2024-08-20 04:28 out/monochrome/clang_x86/
--rw-r--r-- runner/docker     7739 2024-09-30 12:57 out/monochrome/clang_x86/toolchain.ninja
--rw-r--r-- runner/docker     1031 2024-09-30 12:57 out/monochrome/args.gn
+-rw-r--r-- runner/docker     7739 2024-10-01 14:38 out/monochrome/clang_x86/toolchain.ninja
+-rw-r--r-- runner/docker     1031 2024-10-01 14:38 out/monochrome/args.gn
 -rw-r--r-- runner/docker   790112 2024-08-20 04:28 out/monochrome/blink_web_tests.runtime_deps
+-rw-r--r-- runner/docker        0 2024-10-01 14:41 out/monochrome/libsystem_webview_pak_allowlist_inputs.so
 drwxr-xr-x runner/docker        0 2024-09-30 13:18 out/monochrome/gen/
 drwxr-xr-x runner/docker        0 2024-08-20 04:28 out/monochrome/gen/remoting/
 -rw-r--r-- runner/docker     8259 2024-08-20 04:28 out/monochrome/gen/remoting/remoting_unittests__library__jni_registration.javasources.txt
@@ -5000,4 +5001,3 @@ drwxr-xr-x runner/docker        0 2024-08-20 07:00 out/monochrome/gen/ui/android
 -rw-r--r-- runner/docker    31196 2024-08-21 14:09 out/monochrome/gen/ui/android/ui_no_recycler_view_java__dex.desugardeps
 -rw------- runner/docker      550 2024-08-20 07:16 out/monochrome/gen/ui/android/ui_strings_grd.R.txt
 -rw-r--r-- runner/docker    15515 2024-08-20 06:38 out/monochrome/gen/ui/android/ui_utils_java.build_config.json
--rw-r--r-- runner/docker    12184 2024-08-20 04:28 out/monochrome/gen/ui/android/ui_no_recycler_view_java.sources
