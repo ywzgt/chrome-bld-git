@@ -35,10 +35,11 @@ _ck_status() {
 
 _docmd() {
 	local targets=(
-		trichrome_chrome_bundle  # only bundle
-		trichrome_library_apk  # only apk
-		trichrome_webview_apk  # or bundle
+		#trichrome_chrome_bundle  # only bundle
+		#trichrome_library_apk  # only apk
+		#trichrome_webview_apk  # or bundle
 		system_webview_apk
+		chrome_public_apk
 	)
 
 	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle "${targets[@]}" && _build64 || _exit || _ck_status "${targets[@]}"
