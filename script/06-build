@@ -30,7 +30,7 @@ _ck_status() {
 	done
 
 	ninja -C "${build_dir}" gen/chrome/browser/resource_coordinator/lifecycle_unit_state.mojom-forward.h
-	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle $* && _build64 || _exit || true
+	ninja -C "${build_dir}" monochrome_64_public_apk $* || _exit
 }
 
 _docmd() {
