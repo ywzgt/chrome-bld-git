@@ -42,7 +42,10 @@ _docmd() {
 		chrome_public_apk
 	)
 
-	ninja -C "${build_dir}" monochrome{,_64_32}_public_bundle "${targets[@]}" && _build64 || _exit || _ck_status "${targets[@]}"
+	sed '/^chrome_public_manifest_package/c\chrome_public_manifest_package = "org.chromium"' -i "${build_dir}/args.gn"
+	ninja -C "${build_dir}" \
+		components/page_image_service/mojom:mojo_bindings \
+		chrome/browser/resource_coordinator:mojo_bindings "${targets[@]}"
 }
 
 _exit() {
