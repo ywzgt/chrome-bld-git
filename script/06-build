@@ -45,7 +45,7 @@ _docmd() {
 	sed '/^chrome_public_manifest_package/c\chrome_public_manifest_package = "org.chromium"' -i "${build_dir}/args.gn"
 	ninja -C "${build_dir}" \
 		components/page_image_service/mojom:mojo_bindings \
-		chrome/browser/resource_coordinator:mojo_bindings "${targets[@]}"
+		chrome/browser/resource_coordinator:mojo_bindings "${targets[@]}" || echo ":: Build failed!"
 }
 
 _exit() {
