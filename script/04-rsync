@@ -1,5 +1,4 @@
-onent-Updates.patch
-Disable-update-s#!/bin/bash
+#!/bin/bash
 
 ver="$(<VERSION)"
 export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
