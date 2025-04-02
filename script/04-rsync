@@ -1,4 +1,5 @@
-#!/bin/bash
+onent-Updates.patch
+Disable-update-s#!/bin/bash
 
 ver="$(<VERSION)"
 export PATH="$PWD/bin":"$PWD/depot_tools":$PATH DEPOT_TOOLS_UPDATE=0
@@ -64,6 +65,8 @@ _patch() {
 }
 
 _docmd() {
+	patch -Np1 -d src <patches/bromite-build-utils.patch
+
 	patch -Np1 -d src <patches/kill-Vision.patch
 	patch -Np1 -d src <patches/kill-Location-fall-back-to-system.patch
 	patch -Np1 -d src <patches/kill-Auth.patch
@@ -76,6 +79,8 @@ _docmd() {
 	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
 	patch -Np1 -d src <patches/No-updater.patch
 
+	patch -Np1 -d src <patches/Add-cromite-flags-support.patch
+
 	_rsync_src
 	_rsync_tools
 	find src -exec touch -cd @${epoch} {} +
@@ -83,7 +88,7 @@ _docmd() {
 }
 
 purl='https://github.com/uazo/cromite/raw/v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce/build/patches'
-wget -qP patches $purl/{Override-Navigator-Language,ungoogled-chromium-no-special-hosts-domains}.patch
+wget -qP patches $purl/{Override-Navigator-Language,ungoogled-chromium-no-special-hosts-domains,bromite-build-utils,Add-cromite-flags-support}.patch
 
 
 _docmd
