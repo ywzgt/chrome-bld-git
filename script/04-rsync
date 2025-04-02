@@ -81,7 +81,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Do-not-ignore-download-location-prompt-setting.patch
 	patch -Np1 -d src <patches/Add-bookmark-import-export-actions.patch
 	patch -Np1 -d src <patches/Add-an-always-incognito-mode.patch
-	patch -Np1 -d src <patches/Add-a-proxy-configuration-page.patch
+	patch -Np1 -d src <patches/Add-a-proxy-configuration-page.patchbuild/config/android/internal_rules.gnibuild/config/android/internal_rules.gni
 	patch -Np1 -d src <patches/Add-custom-tab-intents-privacy-option.patch
 	patch -Np1 -d src <patches/Bromite-subresource-adblocker.patch  # opt
 	patch -Np1 -d src <patches/User-agent-customization.patch
@@ -99,9 +99,7 @@ _docmd() {
 
 #purl='https://github.com/uazo/cromite/raw/v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce/build/patches'
 #wget -qP patches $purl/{Override-Navigator-Language,ungoogled-chromium-no-special-hosts-domains,bromite-build-utils,Add-cromite-flags-support}.patch
-git clone 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce
+git clone --depth 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce
 cp cromite/build/patches/* patches/
 
 _docmd
-cp config/args.gn src/out/monochrome/args.gn
-(cd src; gn gen out/monochrome --filters=//chrome--filters=//chrome)
