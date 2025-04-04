@@ -83,7 +83,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Add-an-always-incognito-mode.patch
 	patch -Np1 -d src <patches/Add-a-proxy-configuration-page.patch
 	patch -Np1 -d src <patches/Add-custom-tab-intents-privacy-option.patch
-	patch -Np1 -d src <patches/Bromite-subresource-adblocker.patch  # opt
+	#patch -Np1 -d src <patches/Bromite-subresource-adblocker.patch  # opt
 	patch -Np1 -d src <patches/User-agent-customization.patch
 	patch -Np1 -d src <patches/Experimental-user-scripts-support.patch
 	patch -Np1 -d src <patches/Add-cromite-flags-support.patch
