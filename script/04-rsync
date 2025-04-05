@@ -103,4 +103,4 @@ git clone --depth 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f
 cp cromite/build/patches/* patches/
 
 _docmd
-(cd src; gn gen out/monochrome --filters=//chrome)
+find src -name \*.orig -delete
