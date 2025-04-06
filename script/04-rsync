@@ -88,6 +88,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Experimental-user-scripts-support.patch
 	patch -Np1 -d src <patches/Add-cromite-flags-support.patch
 
+	patch -Np1 -d src <patches/Content-settings-infrastructure.patch
 	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
 	patch -Np1 -d src <patches/No-updater.patch
 
