@@ -72,7 +72,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Remove-binary-blob-integrations.patch
 	patch -Np1 -d src <patches/Remove-SMS-integration.patch
 	patch -Np1 -d src <patches/Remove-preload-of-com.google.android.gms.fonts.patch
-	#patch -Np1 -d src <patches/Override-Navigator-Language.patch
+	patch -Np1 -d src <patches/Override-Navigator-Language.patch
 	patch -Np1 -d src <patches/ungoogled-chromium-no-special-hosts-domains.patch
 	patch -Np1 -d src <patches/Use-dummy-DFM-installer.patch
 
@@ -93,6 +93,7 @@ _docmd() {
 
 	_rsync_src
 	_rsync_tools
+	find src -name \*.orig -delete
 	find src -exec touch -cd @${epoch} {} +
 	[ ! -d out ] || mv -v out src/
 }
@@ -103,4 +104,3 @@ git clone --depth 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f
 cp cromite/build/patches/* patches/
 
 _docmd
-find src -name \*.orig -delete
