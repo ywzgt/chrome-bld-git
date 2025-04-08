@@ -16,7 +16,7 @@ _build64() {
 
 _ck_status() {
 	local a=$?
-	local f h
+	local f hhttps://www.06se.com/60406.html
 
 	for f in page_info/page_info_buildflags.h \
 		resource_coordinator/lifecycle_unit_state.mojom{,-forward}.h
@@ -42,10 +42,12 @@ _docmd() {
 		chrome_public_apk
 	)
 
+(cd src; gn gen "${build_dir#src/}" --filters=//chrome)
+
 	ninja -C "${build_dir}" components/page_image_service/mojom:mojo_bindings \
 		chrome/browser/resource_coordinator:mojo_bindings page_info_buildflags
 
-	ninja -C "${build_dir}" chrome_public_apk # echo ":: Build failed!"
+	ninja -C "${build_dir}" chrome_public_apk || echo ":: Build failed!"
 }
 
 _exit() {
