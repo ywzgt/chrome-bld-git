@@ -47,7 +47,8 @@ _docmd() {
 	ninja -C "${build_dir}" components/page_image_service/mojom:mojo_bindings \
 		chrome/browser/resource_coordinator:mojo_bindings page_info_buildflags
 
-	ninja -C "${build_dir}" chrome_public_apk -k6 # echo ":: Build failed!"
+	sed '/^chrome_public_manifest_package/c\chrome_public_manifest_package = "org.chromium"' -i "${build_dir}/args.gn"
+	ninja -C "${build_dir}" chrome_public_{apk,bundle} # echo ":: Build failed!"
 }
 
 _exit() {
