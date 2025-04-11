@@ -93,15 +93,16 @@ _docmd() {
 	patch -Np1 -d src <patches/No-updater.patch
 
 	patch -Np1 -d src <patches/Fix-build-error.patch
+	patch -Np1 -d src <patches/add-browser-policy.patch
 
 	# error: no member named 'TrimWhitespaceASCII' in namespace 'base'
 	sed -i '1i#include "base/strings/string_util.h"' src/components/user_scripts/browser/user_script_prefs.cc
 
-	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
-	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
-
 	patch -Np1 -d src <patches/Add-menu-item-to-bookmark-all-tabs.patch
 	patch -Np1 -d src <patches/Add-support-for-ISupportHelpAndFeedback.patch
+
+	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
+	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
 
 	_rsync_src
 	_rsync_tools
