@@ -117,7 +117,6 @@ patch -Np1 -d src <patches/webRTC-do-not-expose-local-IP-addresses.patch
 patch -Np1 -d src <patches/Use-64-bit-WebView-processes.patch
 patch -Np1 -d src <patches/Remove-detection-of-captive-portals.patch
 patch -Np1 -d src <patches/Reduce-HTTP-headers-in-DoH-requests-to-bare-minimum.patch
-patch -Np1 -d src <patches/Move-navigation-bar-to-bottom.patch
 
 	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
 	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
