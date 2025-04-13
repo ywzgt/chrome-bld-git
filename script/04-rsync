@@ -103,13 +103,14 @@ _docmd() {
 
 patch -Np1 -d src <patches/Add-flag-to-disable-IPv6-probes.patch
 patch -Np1 -d src <patches/Add-flag-to-disable-vibration.patch
-patch -Np1 -d src <patches/Add-menu-item-to-view-source.patch
+# patch -Np1 -d src <patches/Add-menu-item-to-view-source.patch
+# patch -Np1 -d src <patches/Add-option-to-force-tablet-UI.patch
 patch -Np1 -d src <patches/Battery-API-return-nothing.patch
 patch -Np1 -d src <patches/disable-battery-status-updater.patch
 patch -Np1 -d src <patches/Disable-all-promo-dialogs.patch
 patch -Np1 -d src <patches/Disable-all-predictors-code.patch
 patch -Np1 -d src <patches/Disable-offline-autofetch-flag.patch
-patch -Np1 -d src <patches/Enable-native-Android-autofill.patch
+# patch -Np1 -d src <patches/Enable-native-Android-autofill.patch
 patch -Np1 -d src <patches/Never-fetch-popular-sites.patch
 patch -Np1 -d src <patches/ungoogled-chromium-Disable-webRTC-log-uploader.patch
 patch -Np1 -d src <patches/webRTC-do-not-expose-local-IP-addresses.patch
