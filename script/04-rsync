@@ -104,7 +104,6 @@ _docmd() {
 patch -Np1 -d src <patches/Add-flag-to-disable-IPv6-probes.patch
 patch -Np1 -d src <patches/Add-flag-to-disable-vibration.patch
 patch -Np1 -d src <patches/Add-menu-item-to-view-source.patch
-patch -Np1 -d src <patches/Add-option-to-force-tablet-UI.patch
 patch -Np1 -d src <patches/Battery-API-return-nothing.patch
 patch -Np1 -d src <patches/disable-battery-status-updater.patch
 patch -Np1 -d src <patches/Disable-all-promo-dialogs.patch
