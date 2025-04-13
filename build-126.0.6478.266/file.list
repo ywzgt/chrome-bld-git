@@ -1,8 +1,9 @@
 126.0.6478.266.bld.tar.xz: XZ compressed data, checksum CRC64
--rw-r--r-- 1 runner docker 1.4G Apr  8 19:53 126.0.6478.266.bld.tar.xz
--rw-r--r-- 1 runner docker 1481421504 Apr  8 19:53 126.0.6478.266.bld.tar.xz
+-rw-r--r-- 1 runner docker 1.8G Apr 13 17:41 126.0.6478.266.bld.tar.xz
+-rw-r--r-- 1 runner docker 1841531232 Apr 13 17:41 126.0.6478.266.bld.tar.xz
 drwxr-xr-x runner/docker     0 2025-04-06 06:59 out/
-drwxr-xr-x runner/docker     0 2025-04-08 19:41 out/monochrome/
+drwxr-xr-x runner/docker     0 2025-04-13 17:26 out/monochrome/
+lrwxrwxrwx runner/docker     0 2025-04-13 13:54 out/monochrome/dump_syms -> clang_x64/dump_syms
 -rw-r--r-- runner/docker  3516 2025-04-04 20:18 out/monochrome/liburl_mojom_traits.so.TOC
 -rw-r--r-- runner/docker    19 2025-04-04 19:49 out/monochrome/bssl_sys_unittests__rust_unittest_exes.txt
 -rw-r--r-- runner/docker   841 2025-04-04 19:49 out/monochrome/libyuv_scale_fuzztest.runtime_deps
@@ -15,7 +16,7 @@ drwxr-xr-x runner/docker     0 2025-04-08 19:41 out/monochrome/
 -rw-r--r-- runner/docker    883 2025-04-04 19:49 out/monochrome/distributed_point_functions_shim_unittests.runtime_deps
 -rw-r--r-- runner/docker    909 2025-04-04 19:49 out/monochrome/dawn_benchmarks.runtime_deps
 -rw-r--r-- runner/docker   8908 2025-04-04 19:49 out/monochrome/capture_unittests.runtime_deps
--rw-r--r-- runner/docker      0 2025-04-08 19:25 out/monochrome/libchrome_inputs.so.TOC
+-rw-r--r-- runner/docker      0 2025-04-13 15:04 out/monochrome/libchrome_inputs.so.TOC
 -rw-r--r-- runner/docker     35 2025-04-04 19:49 out/monochrome/test_rust_static_library_unittests__rust_unittest_exes.txt
 -rw-r--r-- runner/docker   2238 2025-04-04 19:49 out/monochrome/test_cpp_including_rust_dylib_unittests.runtime_deps
 -rw-r--r-- runner/docker   5803 2025-04-04 19:49 out/monochrome/ozone_gl_unittests.runtime_deps
@@ -23,7 +24,7 @@ drwxr-xr-x runner/docker     0 2025-04-08 19:41 out/monochrome/
 -rw-r--r-- runner/docker  13094 2025-04-04 19:49 out/monochrome/csv_password_mojo_unittests.runtime_deps
 -rw-r--r-- runner/docker 164213 2025-04-04 19:51 out/monochrome/libc++.so.TOC
 -rw-r--r-- runner/docker 958592 2025-04-05 06:16 out/monochrome/webgpu_blink_web_tests.runtime_deps
--rw-r--r-- runner/docker 149560168 2025-04-08 19:25 out/monochrome/.ninja_deps
+-rw-r--r-- runner/docker 156054772 2025-04-13 15:04 out/monochrome/.ninja_deps
 -rw-r--r-- runner/docker      3149 2025-04-04 19:49 out/monochrome/tracing_perftests.runtime_deps
 -rw-r--r-- runner/docker      2111 2025-04-04 19:49 out/monochrome/perfetto_unittests.runtime_deps
 -rwxr-xr-x runner/docker   6582696 2025-04-04 20:03 out/monochrome/libthird_party_abseil-cpp_absl.so
@@ -36,7 +37,7 @@ drwxr-xr-x runner/docker     0 2025-04-08 19:41 out/monochrome/
 -rw-r--r-- runner/docker    560408 2025-04-04 19:49 out/monochrome/chromedriver_integrationtests.runtime_deps
 -rw-r--r-- runner/docker   8897024 2024-08-20 04:22 out/monochrome/icudtl.dat
 -rw-r--r-- runner/docker     74384 2025-04-05 06:16 out/monochrome/performance_test_suite_android_webview.runtime_deps
--rw-r--r-- runner/docker  17576967 2025-04-08 19:26 out/monochrome/.ninja_log
+-rw-r--r-- runner/docker  18159437 2025-04-13 15:09 out/monochrome/.ninja_log
 -rw-r--r-- runner/docker      5028 2025-04-04 19:49 out/monochrome/service_manager_unittests.runtime_deps
 -rw-r--r-- runner/docker    556738 2025-04-04 19:49 out/monochrome/chromedriver_unittests.runtime_deps
 -rw-r--r-- runner/docker       806 2025-04-04 19:49 out/monochrome/one_euro_filter_unittests.runtime_deps
@@ -903,8 +904,9 @@ drwxr-xr-x runner/docker         0 2025-04-07 13:51 out/monochrome/pyproto/puffi
 -rw-r--r-- runner/docker       782 2025-04-04 19:49 out/monochrome/spvtools_test.runtime_deps
 -rw-r--r-- runner/docker      9260 2025-04-04 19:49 out/monochrome/aura_unittests.runtime_deps
 -rw-r--r-- runner/docker      2306 2025-04-04 20:07 out/monochrome/libmiracle_parameter_common.so.TOC
+-rwxr-xr-x runner/docker      3688 2025-04-13 15:05 out/monochrome/libchrome_test_dummy_partition.so
 drwxr-xr-x runner/docker         0 2025-04-05 06:16 out/monochrome/clang_x86/
--rw-r--r-- runner/docker      7739 2025-04-08 19:11 out/monochrome/clang_x86/toolchain.ninja
+-rw-r--r-- runner/docker      7739 2025-04-13 12:48 out/monochrome/clang_x86/toolchain.ninja
 -rwxr-xr-x runner/docker  68738544 2025-04-04 20:16 out/monochrome/libnet.so
 -rw-r--r-- runner/docker       301 2025-04-04 19:49 out/monochrome/crc32c_benchmark.runtime_deps
 -rw-r--r-- runner/docker      6278 2025-04-04 19:49 out/monochrome/google_apis_unittests.runtime_deps
@@ -927,7 +929,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 06:16 out/monochrome/clang_x86/
 -rw-r--r-- runner/docker      8868 2025-04-04 19:49 out/monochrome/accessibility_unittests.runtime_deps
 -rw-r--r-- runner/docker      1710 2025-04-04 19:49 out/monochrome/angle_unittests.runtime_deps
 -rw-r--r-- runner/docker        20 2025-04-04 19:49 out/monochrome/test_rust_unittests__rust_unittest_exes.txt
--rw-r--r-- runner/docker         0 2025-04-08 19:25 out/monochrome/libchrome__combined.so
+-rw-r--r-- runner/docker         0 2025-04-13 15:04 out/monochrome/libchrome__combined.so
 -rw-r--r-- runner/docker    118579 2025-04-04 19:57 out/monochrome/libicuuc.so.TOC
 drwxr-xr-x runner/docker         0 2025-04-05 16:24 out/monochrome/resource_zips/
 drwxr-xr-x runner/docker         0 2025-04-05 16:24 out/monochrome/resource_zips/chrome/
@@ -1118,7 +1120,16 @@ drwxr-xr-x runner/docker         0 2025-04-05 07:37 out/monochrome/gen/build/and
 drwxr-xr-x runner/docker         0 2025-04-05 06:16 out/monochrome/gen/build/android/stacktrace/
 -rw-r--r-- runner/docker        76 2025-04-05 06:16 out/monochrome/gen/build/android/stacktrace/java_deobfuscate_java.sources
 -rw-r--r-- runner/docker        84 2025-04-05 07:37 out/monochrome/gen/build/android/build_java__compile_java.d
-drwxr-xr-x runner/docker         0 2025-04-05 06:16 out/monochrome/gen/build/android/unused_resources/
+drwxr-xr-x runner/docker         0 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/
+-rw-r--r-- runner/docker      7079 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources.build_config.json
+drwxr-xr-x runner/docker         0 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources/
+drwxr-xr-x runner/docker         0 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources/generated_java/
+drwxr-xr-x runner/docker         0 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources/generated_java/input_srcjars/
+drwxr-xr-x runner/docker         0 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources/generated_java/input_srcjars/META-INF/
+-rw-r--r-- runner/docker       520 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources__header.d
+-rw-r--r-- runner/docker      1049 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources__build_config_crbug_908819.d
+-rw-r--r-- runner/docker       898 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources__compile_java.d
+-rw------- runner/docker       284 2025-04-13 13:45 out/monochrome/gen/build/android/unused_resources/unused_resources.generated.srcjar
 -rw-r--r-- runner/docker        58 2025-04-05 06:16 out/monochrome/gen/build/android/unused_resources/unused_resources.sources
 -rw-r--r-- runner/docker       147 2025-04-05 06:16 out/monochrome/gen/build/android/build_junit_tests.sources
 -rw------- runner/docker       284 2025-04-05 07:26 out/monochrome/gen/build/android/build_java.generated.srcjar
@@ -3778,7 +3789,7 @@ drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/webui/
 -rw-r--r-- runner/docker         4 2025-04-04 19:49 out/monochrome/gen/ui/webui/examples/browser_mojo_bindings.typemap_config
 drwxr-xr-x runner/docker         0 2025-04-05 07:19 out/monochrome/gen/ui/latency/
 -rw-r--r-- runner/docker       418 2025-04-05 07:19 out/monochrome/gen/ui/latency/jank_tracker_for_experiments_buildflags.h
-drwxr-xr-x runner/docker         0 2025-04-05 09:42 out/monochrome/gen/ui/latency/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:54 out/monochrome/gen/ui/latency/mojom/
 -rw-r--r-- runner/docker        49 2025-04-04 19:49 out/monochrome/gen/ui/latency/mojom/test_interfaces__parser.rsp
 -rw-r--r-- runner/docker       807 2025-04-05 07:56 out/monochrome/gen/ui/latency/mojom/latency_info.mojom-forward.h
 -rw-r--r-- runner/docker      4433 2025-04-05 07:44 out/monochrome/gen/ui/latency/mojom/latency_info.mojom-shared-internal.h
@@ -3805,6 +3816,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:08 out/monochrome/gen/ui/latenc
 -rw------- runner/docker     13411 2025-04-05 07:42 out/monochrome/gen/ui/latency/mojom/latency_info.mojom.srcjar
 -rw-r--r-- runner/docker       574 2025-04-05 09:42 out/monochrome/gen/ui/latency/mojom/latency_info.mojom-blink-test-utils.h
 -rw-r--r-- runner/docker        42 2025-04-04 19:49 out/monochrome/gen/ui/latency/mojom/mojom__generator.rsp
+-rw-r--r-- runner/docker       433 2025-04-13 13:54 out/monochrome/gen/ui/latency/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker        49 2025-04-04 19:49 out/monochrome/gen/ui/latency/mojom/test_interfaces_blink__generator.rsp
 -rw-r--r-- runner/docker         0 2025-04-05 07:23 out/monochrome/gen/ui/latency/mojom/mojom.typemap_config.validated
 -rw-r--r-- runner/docker         4 2025-04-04 19:49 out/monochrome/gen/ui/latency/mojom/test_interfaces_blink.typemap_config
@@ -3834,15 +3846,17 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:08 out/monochrome/gen/ui/latenc
 -rw------- runner/docker     13411 2025-04-05 07:44 out/monochrome/gen/ui/latency/mojom/mojom_java_sources.srcjar
 -rw-r--r-- runner/docker         0 2025-04-05 08:26 out/monochrome/gen/ui/latency/mojom/mojom_blink.typemap_config.validated
 -rw-r--r-- runner/docker       579 2025-04-05 07:56 out/monochrome/gen/ui/latency/mojom/latency_info.mojom-shared-message-ids.h
+-rw-r--r-- runner/docker       442 2025-04-13 13:54 out/monochrome/gen/ui/latency/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker        60 2025-04-05 06:16 out/monochrome/gen/ui/latency/latency_unittests__apk.native_libs
 -rw-r--r-- runner/docker      5251 2025-04-05 06:16 out/monochrome/gen/ui/latency/latency_unittests__library__jni_registration.javasources.txt
 -rw-r--r-- runner/docker      5251 2025-04-05 06:16 out/monochrome/gen/ui/latency/latency_unittests__library__jni_registration.nativesources.txt
-drwxr-xr-x runner/docker         0 2025-04-05 07:44 out/monochrome/gen/ui/base/
+drwxr-xr-x runner/docker         0 2025-04-13 13:53 out/monochrome/gen/ui/base/
 -rw-r--r-- runner/docker       243 2025-04-05 07:22 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java__build_config_crbug_908819.d
 -rw------- runner/docker      2420 2025-04-05 07:26 out/monochrome/gen/ui/base/ui_base_jni_headers.srcjar
 -rw------- runner/docker      3205 2025-04-05 07:36 out/monochrome/gen/ui/base/clipboard_jni_headers.srcjar
 drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/cursor/
-drwxr-xr-x runner/docker         0 2025-04-05 09:41 out/monochrome/gen/ui/base/cursor/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:53 out/monochrome/gen/ui/base/cursor/mojom/
+-rw-r--r-- runner/docker       410 2025-04-13 13:53 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_java__dex.d
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/generated_java/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/generated_java/input_srcjars/
@@ -3852,6 +3866,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/c
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/generated_java/input_srcjars/org/chromium/ui/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/generated_java/input_srcjars/org/chromium/ui/mojom/
 -rw-r--r-- runner/docker      3605 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/mojom_java/generated_java/input_srcjars/org/chromium/ui/mojom/Cursor.java
+-rw-r--r-- runner/docker       187 2025-04-13 13:53 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_java__dex.desugardeps
 -rw------- runner/docker       284 2025-04-05 08:13 out/monochrome/gen/ui/base/cursor/mojom/mojom_java.generated.srcjar
 -rw-r--r-- runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_blink.typemap_config.validated
 -rw-r--r-- runner/docker       464 2025-04-05 07:56 out/monochrome/gen/ui/base/cursor/mojom/cursor_type.mojom-import-headers.h
@@ -3868,6 +3883,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/c
 -rw-r--r-- runner/docker       677 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-forward.h
 -rw-r--r-- runner/docker      2156 2025-04-05 07:56 out/monochrome/gen/ui/base/cursor/mojom/cursor_type.mojom-shared-internal.h
 -rw-r--r-- runner/docker       342 2025-04-05 07:56 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_java__header.d
+-rw-r--r-- runner/docker         1 2025-04-13 13:53 out/monochrome/gen/ui/base/cursor/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker       550 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-features.h
 -rw-r--r-- runner/docker        45 2025-04-04 19:49 out/monochrome/gen/ui/base/cursor/mojom/cursor_type__generate_message_ids.rsp
 -rw-r--r-- runner/docker         4 2025-04-04 19:49 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_blink.typemap_config
@@ -3929,12 +3945,13 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:06 out/monochrome/gen/ui/base/c
 -rw-r--r-- runner/docker         0 2025-04-05 08:31 out/monochrome/gen/ui/base/cursor/mojom/mojom_blink.typemap_config.validated
 -rw------- runner/docker      5697 2025-04-05 07:42 out/monochrome/gen/ui/base/cursor/mojom/cursor_type.mojom.srcjar
 -rw-r--r-- runner/docker      6420 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-shared.h
+-rw-r--r-- runner/docker       607 2025-04-13 13:53 out/monochrome/gen/ui/base/cursor/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker       865 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-params-data.h
 -rw-r--r-- runner/docker      3517 2025-04-05 07:22 out/monochrome/gen/ui/base/cursor/mojom/cursor_type_java.build_config.json
 -rw-r--r-- runner/docker       520 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-test-utils.h
 -rw-r--r-- runner/docker      1948 2025-04-05 08:06 out/monochrome/gen/ui/base/cursor/mojom/cursor.mojom-shared.cc
 drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/ime/
-drwxr-xr-x runner/docker         0 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:53 out/monochrome/gen/ui/base/ime/mojom/
 -rw-r--r-- runner/docker        52 2025-04-04 19:49 out/monochrome/gen/ui/base/ime/mojom/test_interfaces__parser.rsp
 -rw-r--r-- runner/docker       893 2025-04-05 07:56 out/monochrome/gen/ui/base/ime/mojom/text_input_state.mojom-params-data.h
 -rw-r--r-- runner/docker      2607 2025-04-05 07:56 out/monochrome/gen/ui/base/ime/mojom/virtual_keyboard_types.mojom-shared-internal.h
@@ -3980,6 +3997,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:06 out/monochrome/gen/ui/base/i
 -rw-r--r-- runner/docker      2383 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/virtual_keyboard_types.mojom-blink.cc
 -rw-r--r-- runner/docker       686 2025-04-05 08:06 out/monochrome/gen/ui/base/ime/mojom/virtual_keyboard_types.mojom-forward.h
 -rw-r--r-- runner/docker      8591 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom-blink.cc
+-rw-r--r-- runner/docker      2007 2025-04-13 13:53 out/monochrome/gen/ui/base/ime/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker       657 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/text_input_state.mojom-blink-test-utils.h
 -rw------- runner/docker     17981 2025-04-05 07:42 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom.srcjar
 -rw-r--r-- runner/docker     13177 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom-blink.h
@@ -4030,14 +4048,16 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:06 out/monochrome/gen/ui/base/i
 -rw------- runner/docker     35336 2025-04-05 07:44 out/monochrome/gen/ui/base/ime/mojom/mojom_java_sources.srcjar
 -rw-r--r-- runner/docker     10754 2025-04-05 07:56 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom-shared.cc
 -rw-r--r-- runner/docker         0 2025-04-05 08:31 out/monochrome/gen/ui/base/ime/mojom/mojom_blink.typemap_config.validated
+-rw-r--r-- runner/docker       545 2025-04-13 13:53 out/monochrome/gen/ui/base/ime/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker       550 2025-04-05 07:56 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom-features.h
 -rw-r--r-- runner/docker       599 2025-04-05 08:06 out/monochrome/gen/ui/base/ime/mojom/text_input_state.mojom-shared-message-ids.h
 -rw-r--r-- runner/docker      1373 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/virtual_keyboard_types.mojom-blink.h
 -rw-r--r-- runner/docker       496 2025-04-05 08:06 out/monochrome/gen/ui/base/ime/mojom/virtual_keyboard_types.mojom-import-headers.h
 -rw-r--r-- runner/docker      1280 2025-04-05 09:41 out/monochrome/gen/ui/base/ime/mojom/ime_types.mojom-blink-forward.h
+-rw-r--r-- runner/docker       289 2025-04-13 13:53 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java__dex.d
 -rw-r--r-- runner/docker      2393 2025-04-05 07:22 out/monochrome/gen/ui/base/clipboard_jni_headers_java.build_config.json
 drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/dragdrop/
-drwxr-xr-x runner/docker         0 2025-04-05 09:36 out/monochrome/gen/ui/base/dragdrop/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:53 out/monochrome/gen/ui/base/dragdrop/mojom/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java/generated_java/
 drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java/generated_java/input_srcjars/
@@ -4060,6 +4080,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/d
 -rw-r--r-- runner/docker        51 2025-04-04 19:49 out/monochrome/gen/ui/base/dragdrop/mojom/mojom__generator.rsp
 -rw-r--r-- runner/docker       610 2025-04-05 07:22 out/monochrome/gen/ui/base/dragdrop/mojom/drag_drop_types.mojom-forward.h
 -rw-r--r-- runner/docker       488 2025-04-05 07:22 out/monochrome/gen/ui/base/dragdrop/mojom/drag_drop_types.mojom-import-headers.h
+-rw-r--r-- runner/docker       405 2025-04-13 13:53 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker         0 2025-04-05 07:15 out/monochrome/gen/ui/base/dragdrop/mojom/mojom.typemap_config.validated
 -rw-r--r-- runner/docker      3955 2025-04-05 07:22 out/monochrome/gen/ui/base/dragdrop/mojom/drag_drop_types.mojom-shared.h
 -rw-r--r-- runner/docker        51 2025-04-04 19:49 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_blink__generator.rsp
@@ -4084,8 +4105,9 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/d
 -rw------- runner/docker      3072 2025-04-05 08:06 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java_sources.srcjar
 -rw-r--r-- runner/docker      3031 2025-04-05 07:22 out/monochrome/gen/ui/base/dragdrop/mojom/drag_drop_types.mojom-shared.cc
 -rw-r--r-- runner/docker         0 2025-04-05 08:31 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_blink.typemap_config.validated
+-rw-r--r-- runner/docker       402 2025-04-13 13:53 out/monochrome/gen/ui/base/dragdrop/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker       348 2025-04-05 07:11 out/monochrome/gen/ui/base/ozone_buildflags.h
-drwxr-xr-x runner/docker         0 2025-04-05 09:41 out/monochrome/gen/ui/base/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:53 out/monochrome/gen/ui/base/mojom/
 -rw-r--r-- runner/docker      5067 2025-04-05 07:07 out/monochrome/gen/ui/base/mojom/ui_base_types.mojom-module
 -rw-r--r-- runner/docker      8929 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/window_open_disposition.mojom.h
 -rw-r--r-- runner/docker      2445 2025-04-05 07:07 out/monochrome/gen/ui/base/mojom/themes.mojom-module
@@ -4116,6 +4138,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/m
 -rw-r--r-- runner/docker       519 2025-04-05 09:33 out/monochrome/gen/ui/base/mojom/mojom_blink__type_mappings
 -rw-r--r-- runner/docker       123 2025-04-04 19:49 out/monochrome/gen/ui/base/mojom/mojom__generator.rsp
 -rw-r--r-- runner/docker      2432 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/themes.mojom-shared.h
+-rw-r--r-- runner/docker      1237 2025-04-13 13:53 out/monochrome/gen/ui/base/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker       672 2025-04-05 09:41 out/monochrome/gen/ui/base/mojom/window_open_disposition.mojom-blink-test-utils.h
 -rw-r--r-- runner/docker       909 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/themes.mojom.h
 -rw-r--r-- runner/docker      1416 2025-04-05 07:08 out/monochrome/gen/ui/base/mojom/ui_base_types.mojom-webui.ts
@@ -4172,10 +4195,12 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/base/m
 -rw-r--r-- runner/docker      3554 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/window_open_disposition.mojom-shared-internal.h
 -rw-r--r-- runner/docker      3265 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/ui_base_types.mojom-shared-internal.h
 -rw-r--r-- runner/docker      1012 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/ui_base_types.mojom.h
+-rw-r--r-- runner/docker       384 2025-04-13 13:53 out/monochrome/gen/ui/base/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker       914 2025-04-05 09:41 out/monochrome/gen/ui/base/mojom/window_open_disposition.mojom-blink-forward.h
 -rw-r--r-- runner/docker      2169 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/themes.mojom-shared.cc
 -rw-r--r-- runner/docker       485 2025-04-05 08:06 out/monochrome/gen/ui/base/mojom/themes.mojom-test-utils.h
 -rw-r--r-- runner/docker       859 2025-04-05 09:41 out/monochrome/gen/ui/base/mojom/ui_base_types.mojom-blink-forward.h
+-rw-r--r-- runner/docker       177 2025-04-13 13:53 out/monochrome/gen/ui/base/clipboard_jni_headers_java__dex.desugardeps
 -rw-r--r-- runner/docker      7307 2025-04-05 06:16 out/monochrome/gen/ui/base/ui_base_unittests__library__jni_registration.javasources.txt
 drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/accelerators/
 drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/accelerators/mojom/
@@ -4192,6 +4217,8 @@ drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/base/a
 -rw-r--r-- runner/docker        60 2025-04-05 06:16 out/monochrome/gen/ui/base/ui_base_unittests__apk.native_libs
 -rw-r--r-- runner/docker       157 2025-04-05 07:44 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java__compile_java.d
 -rw-r--r-- runner/docker       148 2025-04-05 07:44 out/monochrome/gen/ui/base/clipboard_jni_headers_java__compile_java.d
+-rw-r--r-- runner/docker       205 2025-04-13 13:53 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java__dex.desugardeps
+-rw-r--r-- runner/docker       271 2025-04-13 13:53 out/monochrome/gen/ui/base/clipboard_jni_headers_java__dex.d
 -rw------- runner/docker      1209 2025-04-05 07:42 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_placeholder.srcjar
 drwxr-xr-x runner/docker         0 2025-04-05 07:44 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java/
 drwxr-xr-x runner/docker         0 2025-04-05 07:44 out/monochrome/gen/ui/base/select_file_dialog_jni_headers_java/generated_java/
@@ -4764,7 +4791,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 09:36 out/monochrome/gen/ui/resour
 drwxr-xr-x runner/docker         0 2025-04-05 07:22 out/monochrome/gen/ui/events/
 -rw-r--r-- runner/docker     10304 2025-04-05 06:16 out/monochrome/gen/ui/events/events_unittests__library__jni_registration.javasources.txt
 -rw-r--r-- runner/docker      8916 2025-04-05 06:16 out/monochrome/gen/ui/events/events_unittests__library__jni_registration.nativesources.txt
-drwxr-xr-x runner/docker         0 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:54 out/monochrome/gen/ui/events/mojom/
 -rw-r--r-- runner/docker       534 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/event.mojom-blink-test-utils.h
 -rw-r--r-- runner/docker      8013 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event_constants.mojom-shared.cc
 -rw-r--r-- runner/docker        51 2025-04-04 19:49 out/monochrome/gen/ui/events/mojom/event_latency_metadata_mojom__generate_message_ids.rsp
@@ -4807,6 +4834,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/events
 -rw-r--r-- runner/docker       633 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/event_latency_metadata.mojom-blink-import-headers.h
 -rw-r--r-- runner/docker     22343 2025-04-05 07:41 out/monochrome/gen/ui/events/mojom/keyboard_codes.mojom-module
 -rw-r--r-- runner/docker     13064 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event.mojom-shared.cc
+-rw-r--r-- runner/docker       486 2025-04-13 13:54 out/monochrome/gen/ui/events/mojom/event_latency_metadata_mojom_java__dex.d
 -rw-r--r-- runner/docker         0 2025-04-05 08:31 out/monochrome/gen/ui/events/mojom/event_latency_metadata_mojom_blink.typemap_config.validated
 -rw-r--r-- runner/docker       418 2025-04-05 08:26 out/monochrome/gen/ui/events/mojom/event_latency_metadata_mojom_java__header.d
 -rw-r--r-- runner/docker       383 2025-04-04 19:49 out/monochrome/gen/ui/events/mojom/mojom_blink.typemap_config
@@ -4832,9 +4860,11 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/events
 -rw-r--r-- runner/docker      9371 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event_latency_metadata.mojom.h
 -rw-r--r-- runner/docker     85164 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/event.mojom-blink.h
 -rw-r--r-- runner/docker       547 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event.mojom-shared-message-ids.h
+-rw-r--r-- runner/docker      1861 2025-04-13 13:54 out/monochrome/gen/ui/events/mojom/mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker      1073 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/event.mojom-blink-import-headers.h
 -rw-r--r-- runner/docker       456 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/keyboard_codes.mojom-import-headers.h
 -rw-r--r-- runner/docker      1468 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/scroll_granularity.mojom-blink.h
+-rw-r--r-- runner/docker         1 2025-04-13 13:54 out/monochrome/gen/ui/events/mojom/event_latency_metadata_mojom_java__dex.desugardeps
 -rw-r--r-- runner/docker       594 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event_latency_metadata.mojom-features.h
 -rw-r--r-- runner/docker         0 2025-04-05 07:36 out/monochrome/gen/ui/events/mojom/mojom.typemap_config.validated
 -rw-r--r-- runner/docker      5603 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/keyboard_codes.mojom-shared.h
@@ -4915,6 +4945,7 @@ drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/events
 -rw-r--r-- runner/docker       652 2025-04-05 09:42 out/monochrome/gen/ui/events/mojom/keyboard_codes.mojom-blink-forward.h
 -rw-r--r-- runner/docker         0 2025-04-05 08:31 out/monochrome/gen/ui/events/mojom/mojom_blink.typemap_config.validated
 -rw-r--r-- runner/docker       615 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event_latency_metadata.mojom-shared-message-ids.h
+-rw-r--r-- runner/docker       539 2025-04-13 13:54 out/monochrome/gen/ui/events/mojom/mojom_java__dex.d
 -rw-r--r-- runner/docker       554 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/scroll_granularity.mojom-shared.cc
 -rw------- runner/docker      1188 2025-04-05 07:56 out/monochrome/gen/ui/events/mojom/scroll_granularity.mojom.srcjar
 -rw-r--r-- runner/docker     53205 2025-04-05 08:06 out/monochrome/gen/ui/events/mojom/event.mojom-shared.h
@@ -4964,40 +4995,9 @@ drwxr-xr-x runner/docker         0 2025-04-04 19:49 out/monochrome/gen/ui/ozone/
 -rw-r--r-- runner/docker         4 2025-04-04 19:49 out/monochrome/gen/ui/ozone/public/mojom/gesture_properties_service_blink.typemap_config
 drwxr-xr-x runner/docker         0 2025-04-05 06:16 out/monochrome/gen/ui/display/
 -rw-r--r-- runner/docker      5333 2025-04-05 06:16 out/monochrome/gen/ui/display/display_unittests__library__jni_registration.javasources.txt
-drwxr-xr-x runner/docker         0 2025-04-05 09:36 out/monochrome/gen/ui/display/mojom/
+drwxr-xr-x runner/docker         0 2025-04-13 13:54 out/monochrome/gen/ui/display/mojom/
 -rw-r--r-- runner/docker       653 2025-04-05 08:06 out/monochrome/gen/ui/display/mojom/display_configuration_params.mojom-shared-message-ids.h
 -rw-r--r-- runner/docker       907 2025-04-05 07:16 out/monochrome/gen/ui/display/mojom/screen_orientation.mojom-params-data.h
 -rw-r--r-- runner/docker       726 2025-04-05 09:36 out/monochrome/gen/ui/display/mojom/screen_infos.mojom-blink-import-headers.h
 -rw-r--r-- runner/docker       584 2025-04-05 09:36 out/monochrome/gen/ui/display/mojom/display_mode.mojom-blink-test-utils.h
 -rw-r--r-- runner/docker      2373 2025-04-05 09:36 out/monochrome/gen/ui/display/mojom/screen_orientation.mojom-blink.cc
--rw-r--r-- runner/docker       540 2025-04-05 08:06 out/monochrome/gen/ui/display/mojom/display_mode.mojom-test-utils.h
--rw-r--r-- runner/docker       589 2025-04-05 08:06 out/monochrome/gen/ui/display/mojom/screen_infos.mojom-shared-message-ids.h
--rw------- runner/docker     11484 2025-04-05 07:56 out/monochrome/gen/ui/display/mojom/display_layout.mojom.srcjar
--rw-r--r-- runner/docker       891 2025-04-05 07:16 out/monochrome/gen/ui/display/mojom/display_layout.mojom-params-data.h
--rw-r--r-- runner/docker     17942 2025-04-05 07:16 out/monochrome/gen/ui/display/mojom/display.mojom-shared.h
--rw-r--r-- runner/docker      6299 2025-04-05 07:16 out/monochrome/gen/ui/display/mojom/display_constants.mojom-shared-internal.h
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/META-INF/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/
-drwxr-xr-x runner/docker         0 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/
--rw-r--r-- runner/docker      2652 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/ModesetFlags.java
--rw-r--r-- runner/docker      1329 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/Position.java
--rw-r--r-- runner/docker      1352 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/Rotation.java
--rw-r--r-- runner/docker      4402 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/DisplaySnapshotColorInfo.java
--rw-r--r-- runner/docker      1541 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/ContentProtectionMethod.java
--rw-r--r-- runner/docker      3796 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/DisplayPlacement.java
--rw-r--r-- runner/docker      2964 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/ColorTemperatureAdjustment.java
--rw-r--r-- runner/docker      1412 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/PanelOrientation.java
--rw-r--r-- runner/docker      3032 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/GammaRampRgbEntry.java
--rw-r--r-- runner/docker      1415 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/VariableRefreshRateState.java
--rw-r--r-- runner/docker      1262 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/OffsetReference.java
--rw-r--r-- runner/docker      3750 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/DisplayMode.java
--rw-r--r-- runner/docker      1361 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/HdcpState.java
--rw-r--r-- runner/docker      6452 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/ScreenInfo.java
--rw-r--r-- runner/docker      3886 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/GammaCurve.java
--rw-r--r-- runner/docker      1543 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/PrivacyScreenState.java
--rw-r--r-- runner/docker     11653 2025-04-05 08:27 out/monochrome/gen/ui/display/mojom/mojom_java/generated_java/input_srcjars/org/chromium/display/mojom/DisplaySnapshot.java
