@@ -6,7 +6,7 @@ on:
     #- cron: '5 14,20 7 5 0' #Runs at 14:05 and 20:05, on day 7 of the month, and on Sunday, only in May. UTC (Two triggers: specific date, the day of the week)
     #- cron: '5 02,08 8 5 *' #Runs at 02:05 and 08:05, on day 8 of the month, only in May. UTC (One trigger: specific date)
     - cron: '30 01,7,13 6 4 *'
-    - cron: '30 19 7 4 *'
+    - cron: '30 16 15 4 *'
 
 jobs:
   build-monochrome:
@@ -61,7 +61,7 @@ jobs:
           tar xf "node-${node_ver}-linux-x64.tar.xz" --strip-components=1 -C third_party/node/linux/node-linux-x64
           third_party/node/linux/node-linux-x64/bin/node --version && rm "node-${node_ver}-linux-x64.tar.xz"
           cd ..; rm -rf $HOME/{,.}{vpython,VPY}* depot_tools || true
-          rm -rf src/.git; echo ' '; df -Th; echo ' '; swapon -v
+          #rm -rf src/.git; echo ' '; df -Th; echo ' '; swapon -v
 
       - name: Setup Build Config
         run: bash -e script/05-conf
