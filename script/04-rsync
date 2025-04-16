@@ -64,6 +64,9 @@ _patch() {
 }
 
 _docmd() {
+	_rsync_src
+	_rsync_tools
+
 	patch -Np1 -d src <patches/bromite-build-utils.patch
 
 	patch -Np1 -d src <patches/kill-Vision.patch
@@ -156,8 +159,6 @@ rm -rf src/.git
 	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
 	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
 
-	_rsync_src
-	_rsync_tools
 	find src -name \*.orig -delete
 	find src -exec touch -cd @${epoch} {} +
 	[ ! -d out ] || mv -v out src/
