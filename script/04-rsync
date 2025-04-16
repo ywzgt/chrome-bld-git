@@ -151,6 +151,7 @@ git am ../patches/eyeo-beta-118.0.5993.48-android_api.patch
 git am ../patches/eyeo-beta-118.0.5993.48-android_settings.patch
 git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 )
+rm -rf src/.git
 
 	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
 	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
