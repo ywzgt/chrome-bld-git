@@ -122,9 +122,9 @@ patch -Np1 -d src <patches/Remove-detection-of-captive-portals.patch
 patch -Np1 -d src <patches/Reduce-HTTP-headers-in-DoH-requests-to-bare-minimum.patch
 
 patch -Np1 -d src <patches/Content-settings-infrastructure.patch
-patch -Np1 -d src <patches/Add-webGL-site-setting.patch
-patch -Np1 -d src <patches/Add-webRTC-site-settings.patch
-patch -Np1 -d src <patches/Change-popup-site-setting.patch
+#patch -Np1 -d src <patches/Add-webGL-site-setting.patch
+#patch -Np1 -d src <patches/Add-webRTC-site-settings.patch
+#patch -Np1 -d src <patches/Change-popup-site-setting.patch
 patch -Np1 -d src <patches/Show-NTP-at-startup.patch
 patch -Np1 -d src <patches/Show-site-settings-for-cookies-javascript-and-ads.patch
 (
@@ -134,8 +134,8 @@ git commit -qm update
 git am ../patches/JIT-site-settings.patch
 git am ../patches/Site-setting-for-images.patch
 )
-patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
-patch -Np1 -d src <patches/Timezone-customization.patch
+#patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
+#patch -Np1 -d src <patches/Timezone-customization.patch
 patch -Np1 -d src <patches/Enable-ImprovedBookmarks-by-default.patch
 patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
 patch -Np1 -d src <patches/Disable-AsyncDNS-by-default.patch
