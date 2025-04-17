@@ -125,7 +125,7 @@ patch -Np1 -d src <patches/Reduce-HTTP-headers-in-DoH-requests-to-bare-minimum.p
 #patch -Np1 -d src <patches/Add-webGL-site-setting.patch
 #patch -Np1 -d src <patches/Add-webRTC-site-settings.patch
 #patch -Np1 -d src <patches/Change-popup-site-setting.patch
-patch -Np1 -d src <patches/Show-NTP-at-startup.patch
+## patch -Np1 -d src <patches/Show-NTP-at-startup.patch
 #patch -Np1 -d src <patches/Show-site-settings-for-cookies-javascript-and-ads.patch
 (
 cd src
@@ -154,7 +154,7 @@ git am ../patches/eyeo-beta-118.0.5993.48-android_api.patch
 git am ../patches/eyeo-beta-118.0.5993.48-android_settings.patch
 git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 )
-rm -rf src/.git
+rm -rf src/.git out/*/gen/{chrome/browser/resources/adblock_internals/resources.grd,tools/gritsettings/default_resource_ids}
 patch -Np1 -d src <patches/Eyeo-Adblock-Cromite.patch
 
 	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
