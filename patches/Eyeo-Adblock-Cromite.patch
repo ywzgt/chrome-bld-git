@@ -10,6 +10,7 @@ but not active in upstream.
 Added "enable-stricter-popup-blocker" flag for the global
 deactivation of all pop-ups (default disabled)
 ---
+ .../android/java/res/xml/main_preferences.xml |   19 +-
  chrome/browser/BUILD.gn                       |    2 -
  .../adblock/adblock_content_browser_client.cc |  285 +-
  .../adblock/adblock_content_browser_client.h  |   48 +-
@@ -144,7 +145,18 @@ deactivation of all pop-ups (default disabled)
  create mode 100644 components/resources/adblocking/snippets/dist/isolated-first.source.jst
  create mode 100644 cromite_flags/chrome/browser/about_flags_cc/Stricter-popup-blocker.inc
 
-
+diff --git a/chrome/android/java/res/xml/main_preferences.xml b/chrome/android/java/res/xml/main_preferences.xml
+--- a/chrome/android/java/res/xml/main_preferences.xml
++++ b/chrome/android/java/res/xml/main_preferences.xml
+@@ -127,7 +127,7 @@ Use of this source code is governed by the GPLv3 that can be found in the compon
+         android:title="@string/prefs_accessibility"/>
+     <Preference
+         android:fragment="org.chromium.components.adblock.settings.AdblockSettingsFragment"
+-        android:key="adblock"
++        android:key="eyeo_adblock"
+         android:order="18"
+         android:title="@string/adblock_settings_title" />
+     <Preference
 --- a/chrome/browser/BUILD.gn
 +++ b/chrome/browser/BUILD.gn
 @@ -164,8 +164,6 @@ static_library("browser") {
