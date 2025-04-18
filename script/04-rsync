@@ -64,9 +64,6 @@ _patch() {
 }
 
 _docmd() {
-	_rsync_src
-	_rsync_tools
-
 	patch -Np1 -d src <patches/bromite-build-utils.patch
 
 	patch -Np1 -d src <patches/kill-Vision.patch
@@ -86,34 +83,30 @@ _docmd() {
 	patch -Np1 -d src <patches/Add-an-always-incognito-mode.patch
 	patch -Np1 -d src <patches/Add-a-proxy-configuration-page.patch
 	patch -Np1 -d src <patches/Add-custom-tab-intents-privacy-option.patch
-	#patch -Np1 -d src <patches/Bromite-subresource-adblocker.patch  # opt
 	patch -Np1 -d src <patches/User-agent-customization.patch
 	patch -Np1 -d src <patches/Experimental-user-scripts-support.patch
 	patch -Np1 -d src <patches/Add-cromite-flags-support.patch
 
-	#patch -Np1 -d src <patches/Content-settings-infrastructure.patch
+	patch -Np1 -d src <patches/Content-settings-infrastructure.patch
 	patch -Np1 -d src <patches/Fix-chromium-build-bugs.patch
 	patch -Np1 -d src <patches/No-updater.patch
 
 	patch -Np1 -d src <patches/Fix-build-error.patch
 	patch -Np1 -d src <patches/add-browser-policy.patch
 
-	# error: no member named 'TrimWhitespaceASCII' in namespace 'base'
-	sed -i '1i#include "base/strings/string_util.h"' src/components/user_scripts/browser/user_script_prefs.cc
-
 	patch -Np1 -d src <patches/Add-menu-item-to-bookmark-all-tabs.patch
 	patch -Np1 -d src <patches/Add-support-for-ISupportHelpAndFeedback.patch
 
 patch -Np1 -d src <patches/Add-flag-to-disable-IPv6-probes.patch
 patch -Np1 -d src <patches/Add-flag-to-disable-vibration.patch
-# patch -Np1 -d src <patches/Add-menu-item-to-view-source.patch
-# patch -Np1 -d src <patches/Add-option-to-force-tablet-UI.patch
+patch -Np1 -d src <patches/Add-menu-item-to-view-source.patch
+patch -Np1 -d src <patches/Add-option-to-force-tablet-UI.patch
 patch -Np1 -d src <patches/Battery-API-return-nothing.patch
 patch -Np1 -d src <patches/disable-battery-status-updater.patch
 patch -Np1 -d src <patches/Disable-all-promo-dialogs.patch
 patch -Np1 -d src <patches/Disable-all-predictors-code.patch
 patch -Np1 -d src <patches/Disable-offline-autofetch-flag.patch
-# patch -Np1 -d src <patches/Enable-native-Android-autofill.patch
+patch -Np1 -d src <patches/Enable-native-Android-autofill.patch
 patch -Np1 -d src <patches/Never-fetch-popular-sites.patch
 patch -Np1 -d src <patches/ungoogled-chromium-Disable-webRTC-log-uploader.patch
 patch -Np1 -d src <patches/webRTC-do-not-expose-local-IP-addresses.patch
@@ -121,21 +114,21 @@ patch -Np1 -d src <patches/Use-64-bit-WebView-processes.patch
 patch -Np1 -d src <patches/Remove-detection-of-captive-portals.patch
 patch -Np1 -d src <patches/Reduce-HTTP-headers-in-DoH-requests-to-bare-minimum.patch
 
-#patch -Np1 -d src <patches/Content-settings-infrastructure.patch
-#patch -Np1 -d src <patches/Add-webGL-site-setting.patch
-#patch -Np1 -d src <patches/Add-webRTC-site-settings.patch
-#patch -Np1 -d src <patches/Change-popup-site-setting.patch
-## patch -Np1 -d src <patches/Show-NTP-at-startup.patch
-#patch -Np1 -d src <patches/Show-site-settings-for-cookies-javascript-and-ads.patch
+patch -Np1 -d src <patches/Content-settings-infrastructure.patch
+patch -Np1 -d src <patches/Add-webGL-site-setting.patch
+patch -Np1 -d src <patches/Add-webRTC-site-settings.patch
+patch -Np1 -d src <patches/Change-popup-site-setting.patch
+patch -Np1 -d src <patches/Show-NTP-at-startup.patch
+patch -Np1 -d src <patches/Show-site-settings-for-cookies-javascript-and-ads.patch
 (
 cd src
 git add .
 git commit -qm update
-#git am ../patches/JIT-site-settings.patch
-#git am ../patches/Site-setting-for-images.patch
+git am ../patches/JIT-site-settings.patch
+git am ../patches/Site-setting-for-images.patch
 )
-#patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
-#patch -Np1 -d src <patches/Timezone-customization.patch
+patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
+patch -Np1 -d src <patches/Timezone-customization.patch
 patch -Np1 -d src <patches/Enable-ImprovedBookmarks-by-default.patch
 patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
 patch -Np1 -d src <patches/Disable-AsyncDNS-by-default.patch
@@ -154,19 +147,15 @@ git am ../patches/eyeo-beta-118.0.5993.48-android_api.patch
 git am ../patches/eyeo-beta-118.0.5993.48-android_settings.patch
 git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 )
-rm -rf src/.git out/*/gen/{chrome/browser/resources/adblock_internals/resources.grd,tools/gritsettings/default_resource_ids}
 patch -Np1 -d src <patches/Eyeo-Adblock-Cromite.patch
 
-	sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
-	sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
-
+	_rsync_src
+	_rsync_tools
 	find src -name \*.orig -delete
 	find src -exec touch -cd @${epoch} {} +
 	[ ! -d out ] || mv -v out src/
 }
 
-#purl='https://github.com/uazo/cromite/raw/v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce/build/patches'
-#wget -qP patches $purl/{Override-Navigator-Language,ungoogled-chromium-no-special-hosts-domains,bromite-build-utils,Add-cromite-flags-support}.patch
 git clone --depth 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce
 cp cromite/build/patches/* patches/
 
