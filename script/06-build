@@ -42,8 +42,6 @@ _docmd() {
 		chrome_public_apk
 	)
 
-(cd src; gn gen "${build_dir#src/}" --filters=//chrome)
-
 	ninja -C "${build_dir}" components/page_image_service/mojom:mojo_bindings \
 		chrome/browser/resource_coordinator:mojo_bindings page_info_buildflags
 
@@ -60,5 +58,5 @@ _exit() {
 	fi
 }
 
-sleep 16680 && pkill ninja &
+sleep 5h && pkill ninja &
 _docmd
