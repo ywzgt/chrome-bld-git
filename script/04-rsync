@@ -73,7 +73,7 @@ _docmd() {
 	patch -Np1 -d src <patches/Remove-SMS-integration.patch
 	patch -Np1 -d src <patches/Remove-preload-of-com.google.android.gms.fonts.patch
 	#patch -Np1 -d src <patches/Override-Navigator-Language.patch
-	patch -Np1 -d src <patches/ungoogled-chromium-no-special-hosts-domains.patch
+	#patch -Np1 -d src <patches/ungoogled-chromium-no-special-hosts-domains.patch
 	patch -Np1 -d src <patches/Use-dummy-DFM-installer.patch
 
 	patch -Np1 -d src <patches/Move-some-account-settings-back-to-privacy-settings.patch
@@ -129,7 +129,7 @@ git am ../patches/Site-setting-for-images.patch
 patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
 patch -Np1 -d src <patches/Timezone-customization.patch
 patch -Np1 -d src <patches/Enable-ImprovedBookmarks-by-default.patch
-patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
+#patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
 patch -Np1 -d src <patches/Disable-AsyncDNS-by-default.patch
 patch -Np1 -d src <patches/Disable-Feeback-Collector.patch
 patch -Np1 -d src <patches/Disable-NTP-remote-suggestions-by-default.patch
