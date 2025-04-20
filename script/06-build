@@ -60,5 +60,5 @@ _exit() {
 	fi
 }
 
-sleep 16500 && pkill ninja &
+sleep 16680 && pkill ninja &
 _docmd
