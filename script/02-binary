@@ -21,7 +21,8 @@ _docmd() {
 	printf 'done.\n'
 
 	printf "Get bash script: 'install-build-deps'..."
-	curl -s "https://chromium.googlesource.com/chromium/src/+/${commit}/build/install-build-deps.sh?format=TEXT" | base64 -d >bin/install-build-deps
+	#curl -s "https://chromium.googlesource.com/chromium/src/+/${commit}/build/install-build-deps.sh?format=TEXT" | base64 -d >bin/install-build-deps
+	wget https://github.com/ywzgt/chrome-bld/raw/refs/heads/main/install-build-dep.sh -qO bin/install-build-deps
 	printf 'done.\n'
 
 	chmod 755 bin/{gn,ninja,install-build-deps}
