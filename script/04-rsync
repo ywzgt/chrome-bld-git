@@ -152,6 +152,10 @@ git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 patch -Np1 -d src <patches/Eyeo-Adblock-Cromite.patch
 patch -Np1 -d src <patches/i18n.patch
 
+sed -i '1i#include "base/strings/string_util.h"' src/components/user_scripts/browser/user_script_prefs.cc
+sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
+sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
+
 	_rsync_src
 	_rsync_tools
 	find src -name \*.orig -delete
