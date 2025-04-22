@@ -136,7 +136,8 @@ patch -Np1 -d src <patches/Enable-ImprovedBookmarks-by-default.patch
 patch -Np1 -d src <patches/Disable-AsyncDNS-by-default.patch
 patch -Np1 -d src <patches/Disable-Feeback-Collector.patch
 patch -Np1 -d src <patches/Disable-NTP-remote-suggestions-by-default.patch
-patch -Np1 -d src <patches/Disable-privacy-issues-in-password-manager.patch 
+patch -Np1 -d src <patches/Disable-privacy-issues-in-password-manager.patch
+patch -Np1 -d src <patches/Enable-darken-websites-checkbox-in-themes.patch
 
 (
 cd src
