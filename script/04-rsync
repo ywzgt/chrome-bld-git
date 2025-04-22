@@ -131,7 +131,7 @@ git am ../patches/Site-setting-for-images.patch
 patch -Np1 -d src <patches/Revert-remove-allowscript-content-setting-secondary-url.patch
 patch -Np1 -d src <patches/Timezone-customization.patch
 patch -Np1 -d src <patches/Enable-ImprovedBookmarks-by-default.patch
-#patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
+patch -Np1 -d src <patches/Dictionary-suggestions-for-the-Omnibox.patch
 patch -Np1 -d src <patches/Disable-AsyncDNS-by-default.patch
 patch -Np1 -d src <patches/Disable-Feeback-Collector.patch
 patch -Np1 -d src <patches/Disable-NTP-remote-suggestions-by-default.patch
@@ -150,6 +150,7 @@ git am ../patches/eyeo-beta-118.0.5993.48-android_settings.patch
 git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 )
 patch -Np1 -d src <patches/Eyeo-Adblock-Cromite.patch
+patch -Np1 -d src <patches/i18n.patch
 
 	_rsync_src
 	_rsync_tools
