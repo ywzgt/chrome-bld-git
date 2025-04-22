@@ -1,0 +1,58 @@
+--- a/chrome/browser/ui/android/strings/translations/android_chrome_strings_zh-CN.xtb
++++ b/chrome/browser/ui/android/strings/translations/android_chrome_strings_zh-CN.xtb
+@@ -1666,4 +1666,23 @@
+ <translation id="988091779042748639">若要删除您设备中的无痕浏览记录，请关闭所有无痕式标签页。</translation>
+ <translation id="992745192656291733"><ph name="TAB_COUNT" /> 个标签页</translation>
+ <translation id="996149300115483134">动态卡片上的菜单已关闭</translation>
+-</translationbundle>
+\ No newline at end of file
++<translation id="6897140037006041989">用户代理</translation>
++<translation id="2849027590920350852">自定义用户代理</translation>
++<translation id="8920209750879608387">自定义</translation>
++<translation id="3518039828215318352">默认</translation>
++<translation id="221247012215431408">输入用户代理</translation>
++<translation id="3414581552405433519">移动版网站</translation>
++<translation id="560430187119032030">桌面版网站</translation>
++<translation id="5926902521522105785">为桌面版启用 Viewport 元标签解析</translation>
++<translation id="9148058034647219655">退出</translation>
++<translation id="8082300724182262861">自定义标签页意图</translation>
++<translation id="3872079764041807613">允许应用自定义标签页意图，类似 WebView</translation>
++<translation id="2791404607207277079">无痕模式下打开外部链接</translation>
++<translation id="301512112618062870">强制所有外部链接在无痕模式下打开</translation>
++<translation id="6199737228675124545">以平板电脑模式启动</translation>
++<translation id="8538054130673254553">强制使用平板电脑模式</translation>
++<translation id="8275038454117074363">导入</translation>
++<translation id="42126664696688958">导出</translation>
++<translation id="2763506109354032641">导出书签到文件</translation>
++<translation id="5494920125229734069">全选</translation>
++</translationbundle>
+--- a/components/browser_ui/strings/android/translations/browser_ui_strings_zh-CN.xtb
++++ b/components/browser_ui/strings/android/translations/browser_ui_strings_zh-CN.xtb
+@@ -514,4 +514,7 @@
+ <translation id="930525582205581608">移除此网站？</translation>
+ <translation id="947156494302904893">您访问的网站可以验证您是真人而非机器人</translation>
+ <translation id="967624055006145463">已存储的数据</translation>
+-</translationbundle>
+\ No newline at end of file
++<translation id="410351446219883937">自动播放</translation>
++<translation id="7445411102860286510">允许网站自动播放静音的视频</translation>
++<translation id="7232255641409319872">允许网站显示图片</translation>
++</translationbundle>
+--- a/components/strings/components_strings_zh-CN.xtb
++++ b/components/strings/components_strings_zh-CN.xtb
+@@ -4330,4 +4330,13 @@
+ <translation id="994346157028146140">JIS B1</translation>
+ <translation id="995755448277384931">添加 IBAN</translation>
+ <translation id="997986563973421916">来自 Google Pay</translation>
+-</translationbundle>
+\ No newline at end of file
++<translation id="8677659652102671482">用户脚本</translation>
++<translation id="5387227673092839387">运行用户脚本</translation>
++<translation id="5679989071017888358">添加脚本</translation>
++<translation id="3421511728817915523">实验性支持 Greasemonkey 类型的用户脚本</translation>
++<translation id="404606687423498907">要安装以下脚本吗？
++
++<ph name="FILE" />
++
++注意：建议只安装已验证安全的用户脚本，攻击者可能会利用脚本窃取您的证书和个人信息。</translation>
++</translationbundle>
