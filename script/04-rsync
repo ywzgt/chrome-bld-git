@@ -157,6 +157,7 @@ sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/
 sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
 
 sed -i '/policy::key::kTranslateEnabled/d' src/components/policy/core/common/policy_loader_command_line.cc
+sed -i '/mDelegate.requestRestart/d' src/chrome/android/java/src/org/chromium/chrome/browser/accessibility/settings/AccessibilitySettings.java
 
 	_rsync_src
 	_rsync_tools
@@ -167,7 +168,6 @@ sed -i '/policy::key::kTranslateEnabled/d' src/components/policy/core/common/pol
 
 git clone --depth 1 https://github.com/uazo/cromite -b v126.0.6478.186-d9e9f1d8f6825634fb9971a0880d974c7ce182ce
 cp cromite/build/patches/* patches/
-sed -i '/mDelegate.requestRestart/d' patches/Add-option-to-force-tablet-UI.patch
 
 cat >patches/Fix-build-error.patch <<"EOF"
 --- a/chrome/browser/language/android/java/src/org/chromium/chrome/browser/language/settings/AppLanguagePreferenceDelegate.java
