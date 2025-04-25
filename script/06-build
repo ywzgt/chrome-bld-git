@@ -53,6 +53,7 @@ _docmd() {
 _exit() {
 	local a=$?
 	if pidof -q sleep; then
+		ninja -C "${build_dir}" chrome_public_{apk,bundle}
 		return $a
 	else
 		return 0
