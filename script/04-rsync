@@ -156,7 +156,7 @@ sed -i '1i#include "base/strings/string_util.h"' src/components/user_scripts/bro
 sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
 sed -i '/^package org.chromium.chrome.browser.privacy.settings;$/a\import android.content.SharedPreferences;\nimport org.chromium.base.ContextUtils;' src/chrome/android/java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettings.java
 
-#sed -i '/policy::key::kTranslateEnabled/d' src/components/policy/core/common/policy_loader_command_line.cc
+sed -i '/policy::key::kTranslateEnabled/d' src/components/policy/core/common/policy_loader_command_line.cc
 sed -i '/mDelegate.requestRestart/d' src/chrome/android/java/src/org/chromium/chrome/browser/accessibility/settings/AccessibilitySettings.java
 
 	_rsync_src
