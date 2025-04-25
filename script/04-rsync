@@ -150,7 +150,7 @@ git am ../patches/eyeo-beta-118.0.5993.48-android_settings.patch
 git am ../patches/eyeo-beta-118.0.5993.48-extension_api.patch
 )
 patch -Np1 -d src <patches/Eyeo-Adblock-Cromite.patch
-patch -Np1 -d src <patches/i18n.patch
+#patch -Np1 -d src <patches/i18n.patch
 
 sed -i '1i#include "base/strings/string_util.h"' src/components/user_scripts/browser/user_script_prefs.cc
 sed -i '1i#include "chrome/browser/google/google_update_settings_posix.cc"' src/chrome/browser/chrome_content_browser_client.cc
